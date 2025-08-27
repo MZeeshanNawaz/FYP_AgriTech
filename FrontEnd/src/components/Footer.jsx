@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 
 export default function Footer({ subscribeEmail, setSubscribeEmail, handleSubscribe }) {
   return (
@@ -9,7 +9,6 @@ export default function Footer({ subscribeEmail, setSubscribeEmail, handleSubscr
             <div className="col-lg-3">
               <img src="/Logo.png" alt="Agritech" className="footer-logo mb-3" />
               <p className="small footer-desc">Feel free to contact us</p>
-
               <div className="socials mt-3">
                 <a href="#" className="social-btn"><i className="fa-brands fa-twitter"></i></a>
                 <a href="#" className="social-btn"><i className="fa-brands fa-facebook-f"></i></a>
@@ -31,12 +30,10 @@ export default function Footer({ subscribeEmail, setSubscribeEmail, handleSubscr
 
             <div className="col-lg-4">
               <h6 className="footer-heading">Blog</h6>
-
               <div className="footer-blog-item">
                 <a href="#" className="d-block blog-title">Smart Fertilizer Advice Tailored to Your Crop’s Health</a>
                 <div className="blog-meta small">July 25, 2025</div>
               </div>
-
               <div className="footer-blog-item mt-3">
                 <a href="#" className="d-block blog-title">Grow Smarter with AI-Based Fertilizer Planning</a>
                 <div className="blog-meta small">July 30, 2025</div>
@@ -59,10 +56,10 @@ export default function Footer({ subscribeEmail, setSubscribeEmail, handleSubscr
                       className="form-control form-control-sm"
                       placeholder="Your Email Address"
                     />
-                    <button 
-                      className="btn subscribe-btn" 
-                      type="button" 
-                      onClick={handleSubscribe}
+                    <button
+                      className="btn subscribe-btn"
+                      type="button"
+                      onClick={handleSubscribe} // triggers toast
                     >
                       <i className="fa-solid fa-paper-plane"></i>
                     </button>
@@ -85,5 +82,5 @@ export default function Footer({ subscribeEmail, setSubscribeEmail, handleSubscr
         </div>
       </div>
     </footer>
-  )
+  );
 }

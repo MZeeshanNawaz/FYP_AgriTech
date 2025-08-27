@@ -5,7 +5,7 @@ const products = [
     price: 'PKR 2,500',
     image: 'https://cdn.prod.website-files.com/5ec959f99359c2ff953a4353/649cd83a6d9e586490d25fec_market-corn.jpg',
     author: 'Muhammad Zeeshan Nawaz',
-    contact: '0301-1654141'
+    contactNumber: '0301-1654141'
   },
   {
     id: 2,
@@ -13,7 +13,7 @@ const products = [
     price: 'PKR 5,000',
     image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7zHT1yn42JQ_mQ0oSP7vXuDwvEAeZj_2-XQ&s',
     author: 'Husnain Khalid',
-    contact: '0314-4617291'
+    contactNumber: '0314-4617291'
   },
   {
     id: 3,
@@ -21,7 +21,7 @@ const products = [
     price: 'PKR 2,700',
     image: 'https://5.imimg.com/data5/SELLER/Default/2023/8/334836385/UJ/RM/IO/23524314/yellow-corn-maize.jpg',
     author: 'Okasha Javaid',
-    contact: '0325-4586487'
+    contactNumber: '0325-4586487'
   },
   {
     id: 4,
@@ -29,7 +29,7 @@ const products = [
     price: 'PKR 5,400',
     image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzGomIrjuZiW0l2Mx1xi0fsux4CyDMK_EJiZ-35ZPnEHVYTq84a9AB7lxKPCrIL-TwbeI&usqp=CAU',
     author: 'Muhammad Zeeshan Nawaz',
-    contact: '0301-1654141'
+    contactNumber: '0301-1654141'
   },
   {
     id: 5,
@@ -37,7 +37,7 @@ const products = [
     price: 'PKR 3,000',
     image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqCZ8I2DKIrzZtkFEJvNCUoob_AzgTbLKLiw&s',
     author: 'Husnain Khalid',
-    contact: '0314-4617291'
+    contactNumber: '0314-4617291'
   },
   {
     id: 6,
@@ -45,7 +45,7 @@ const products = [
     price: 'PKR 3,700',
     image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_n_caGCdMWvbjWs5XyNK4WngkWfZ_RNIbZ3Ngas0BY59DgYvOTziszYSFKW1OafT8cW4&usqp=CAU',
     author: 'Okasha Javaid',
-    contact: '0325-4586487'
+    contactNumber: '0325-4586487'
   }
 ]
 

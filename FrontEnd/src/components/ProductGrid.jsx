@@ -1,7 +1,7 @@
-import React from 'react'
-import ProductCard from './ProductCard'
+import React from "react"
+import ProductCard from "./ProductCard"
 
-export default function ProductGrid({ products, onDelete, search = '' }) {
+export default function ProductGrid({ products, onDelete, search = "" }) {
   const q = search.trim().toLowerCase()
 
   const list = React.useMemo(() => {
@@ -10,12 +10,12 @@ export default function ProductGrid({ products, onDelete, search = '' }) {
     return products.filter(p => {
       const haystack = [
         p.title,
-        p.cropType,        // some DB items may use cropType instead of title
+        p.cropType,
         p.author,
         p.price?.toString()
       ]
         .filter(Boolean)
-        .join(' ')
+        .join(" ")
         .toLowerCase()
       return haystack.includes(q)
     })
