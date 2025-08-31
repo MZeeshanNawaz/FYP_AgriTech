@@ -7,7 +7,7 @@ const TEAM = [
     id: 1,
     name: "Husnain Khalid",
     role: "Backend Developer",
-    img: "https://i.postimg.cc/nh6bc9s6/IMG-20250831-WA0025.jpg",
+    img: "https://i.postimg.cc/66mDh1wd/IMG-20250831-WA0029.jpg",
   },
   {
     id: 2,
