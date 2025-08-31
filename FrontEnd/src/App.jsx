@@ -6,6 +6,7 @@ import Navbar from "./components/Navbar";
 import ToastsContainer from "./components/ToastsContainer";
 import Marketplace from "./pages/Marketplace";
 import Home from "./pages/Home";
+import About from "./pages/About";   // ✅ new page
 import Footer from "./components/Footer";
 
 // static fallback products
@@ -73,6 +74,7 @@ export default function App() {
       <ContactStrip />
       <Navbar search={search} setSearch={setSearch} />
 
+      {/* Toast notifications */}
       <ToastsContainer
         toasts={toasts}
         removeToast={(id) => setToasts((prev) => prev.filter((t) => t.id !== id))}
@@ -92,12 +94,13 @@ export default function App() {
             />
           }
         />
+        <Route path="/about" element={<About />} /> {/* ✅ About route */}
       </Routes>
 
       <Footer
         subscribeEmail={subscribeEmail}
         setSubscribeEmail={setSubscribeEmail}
-        handleSubscribe={handleSubscribe} // pass toast-enabled handler
+        handleSubscribe={handleSubscribe} // ✅ toast-enabled handler
       />
     </>
   );

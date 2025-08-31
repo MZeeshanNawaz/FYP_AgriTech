@@ -1,5 +1,5 @@
 import React from "react"
-import Hero from "../components/Hero"
+import Hero from "../components/HeroMarket"
 import ProductGrid from "../components/ProductGrid"
 import SellCrop from "../components/SellCrop"
 

@@ -1,7 +1,4 @@
-/* paste the same CSS you used earlier (the last version you approved)
-   Below is the expanded footer + card CSS adapted for the React components */
-
-:root{
+:root {
   --primary-green: #3ea23e;
   --muted: #9b9b9b;
   --footer-main: #25221f;
@@ -9,25 +6,44 @@
   font-family: 'Poppins', sans-serif;
 }
 
-/* Toast container is top-right already in ToastsContainer via classes, but ensure small adjustments */
-.toast-container .toast { min-width: 260px; max-width: 360px; }
+/* Toast container */
+.toast-container .toast {
+  min-width: 260px;
+  max-width: 360px;
+}
 
-/* Keep the rest of your existing CSS unchanged (hero, cards, footer, price-pill etc.) */
+/* Top stripe */
+.top-stripe {
+  height: 6px;
+  background: linear-gradient(90deg, #3ea23e 0%, #e9c73a 40%, #f39c12 100%);
+}
+
+/* Contact strip */
+.contact-strip .logo-img {
+  height: 36px;
+  object-fit: contain;
+}
+
+/* Navbar */
+.navbar {
+  z-index: 50;
+}
+
+/* =============== HERO SECTIONS =============== */
 
 /* Hero Home */
 .hero-home {
   position: relative;
   height: 500px;
-  background-image: url("/hero-home.jpg");
-  background-size: cover;
-  background-position: center;
+  background: url("https://media.istockphoto.com/id/522000180/photo/tractor-spraying-pesticide-in-a-field-of-wheat.jpg?s=612x612&w=0&k=20&c=64PzUoZyiEySkyp4Wb8Detfjy8PquZoAS2Epoybt4PM%3D")
+    center center/cover no-repeat;
   display: flex;
   align-items: center;
 }
 .hero-home .hero-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(0,0,0,0.35);
+  background: rgba(0, 0, 0, 0.35);
 }
 .hero-home .hero-content {
   position: relative;
@@ -35,8 +51,140 @@
   max-width: 600px;
 }
 
-/* Intro images */
-.intro-images { display: inline-block; }
+/* Hero About */
+.hero-about {
+  position: relative;
+  height: 300px;
+  background: url("https://media.istockphoto.com/id/1786486973/photo/young-sprout-agricultural-technologies-banner.jpg?s=612x612&w=0&k=20&c=5RCxOczVxCdND-NLRx2LrlaYwnpexMY34by5C0ixL04=")
+    center center/cover no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+}
+.hero-content {
+  position: relative;
+  z-index: 2;
+}
+.hero .breadcrumb {
+  opacity: 0.9;
+  letter-spacing: 0.12em;
+}
+.hero-edge {
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  transform: translateY(1px);
+}
+.hero-edge svg {
+  display: block;
+  width: 100%;
+  height: 100px;
+}
+
+/* Hero Marketplace */
+.hero-marketplace {
+  position: relative;
+  height: 300px;
+  background: url("/MarketPlace.png") center center/cover no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* =============== CARDS =============== */
+.crop-card {
+  border: none;
+  border-radius: 6px;
+  overflow: visible;
+  transition: transform 0.18s ease;
+}
+.crop-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.08);
+}
+.crop-image-wrap {
+  position: relative;
+  overflow: visible;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+}
+.crop-image-wrap img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  display: block;
+  border-radius: 6px 6px 0 0;
+}
+
+/* Price pill */
+.price-pill {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: -22px;
+  background: var(--primary-green);
+  color: #fff;
+  padding: 8px 20px;
+  border-radius: 24px;
+  font-weight: 700;
+  font-size: 0.88rem;
+  border: 4px solid #fff;
+  z-index: 10;
+  box-shadow: 0 8px 20px rgba(62, 162, 62, 0.18);
+}
+.price-pill::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: -8px;
+  width: 36px;
+  height: 10px;
+  background: #fff;
+  border-radius: 3px;
+  z-index: -1;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.04);
+}
+
+/* Card body */
+.crop-card .card-body {
+  padding-top: 30px;
+  margin-top: 12px;
+}
+.card-title {
+  margin-bottom: 0;
+  margin-top: 6px;
+  font-size: 1.05rem;
+  color: #222;
+}
+
+/* =============== SERVICES CARDS =============== */
+.service-card img {
+  height: 200px;
+  object-fit: cover;
+  border-radius: 8px 8px 0 0;
+}
+.service-card {
+  border-radius: 12px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.service-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.12);
+}
+
+/* =============== INTRO IMAGES =============== */
+.intro-images {
+  display: inline-block;
+}
 .intro-small-img {
   width: 120px;
   height: 120px;
@@ -45,125 +193,153 @@
   object-fit: cover;
 }
 
-/* Services cards */
-.service-card img {
-  height: 200px;
-  object-fit: cover;
-  border-radius: 8px 8px 0 0;
+/* =============== FOOTER =============== */
+.site-footer {
+  font-family: 'Poppins', sans-serif;
+  color: #d0d0d0;
 }
-.service-card {
-  border-radius: 12px;
-  transition: transform .2s ease, box-shadow .2s ease;
+.footer-top {
+  background: var(--footer-main);
+  padding: 44px 0 36px;
+  color: #cfcfcf;
 }
-.service-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 14px 32px rgba(0,0,0,0.12);
+.footer-logo {
+  height: 44px;
+  object-fit: contain;
 }
-
-
-/* Top stripe */
-.top-stripe{
-  height: 6px;
-  background: linear-gradient(90deg, #3ea23e 0%, #e9c73a 40%, #f39c12 100%);
+.footer-desc {
+  color: #bdbdbd;
+  margin-top: 10px;
 }
-
-/* Contact strip */
-.contact-strip .logo-img{ height: 36px; object-fit: contain; }
-
-/* Navbar */
-.navbar{ z-index: 50; }
-
-.hero-home {
-  background: url("https://media.istockphoto.com/id/522000180/photo/tractor-spraying-pesticide-in-a-field-of-wheat.jpg?s=612x612&w=0&k=20&c=64PzUoZyiEySkyp4Wb8Detfjy8PquZoAS2Epoybt4PM%3D") 
-              center center/cover no-repeat;
-  min-height: 90vh;
-  display: flex;
+.socials .social-btn {
+  display: inline-flex;
   align-items: center;
-  position: relative;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: transparent;
+  color: #e8e8e8;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  margin-right: 8px;
+  transition: all 0.15s ease;
+  font-size: 13px;
 }
-
-/* Hero */
-.hero{
+.socials .social-btn:hover {
+  background: rgba(255, 255, 255, 0.03);
+  transform: translateY(-3px);
+  color: #fff;
+}
+.footer-heading {
+  color: #ffffff;
+  font-weight: 700;
+  margin-bottom: 16px;
   position: relative;
-  height: 300px;
-  background-image: url("/MarketPlace.png");
-  background-size: cover;
-  background-position: center center;
-  display: flex;
+  padding-bottom: 8px;
+  font-size: 14px;
+}
+.footer-heading::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 36px;
+  height: 4px;
+  background: var(--primary-green);
+  border-radius: 3px;
+}
+.footer-links a {
+  color: #bfbfbf;
+  display: block;
+  padding: 6px 0;
+  text-decoration: none;
+}
+.footer-links a i {
+  color: #bfbfbf;
+  font-size: 10px;
+}
+.footer-blog-item .blog-title {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  line-height: 1.18;
+}
+.footer-blog-item .blog-meta {
+  color: #bfbfbf;
+  margin-top: 6px;
+}
+.contact-list i {
+  color: #bfbfbf;
+  margin-right: 8px;
+}
+.subscribe-group {
+  width: 100%;
+  max-width: 260px;
+}
+.subscribe-group .form-control {
+  border-radius: 4px 0 0 4px;
+  border-color: rgba(255, 255, 255, 0.06);
+  background: #fff;
+  padding: 8px 10px;
+}
+.subscribe-btn {
+  border-radius: 0 4px 4px 0;
+  background: var(--primary-green);
+  color: #fff;
+  border: none;
+  padding: 8px 12px;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
 }
-.hero-overlay{ position: absolute; inset: 0; background: rgba(0,0,0,0.35); }
-.hero-content{ position: relative; z-index: 2; }
-.hero .breadcrumb{ opacity: 0.9; letter-spacing: .12em; }
-.hero-edge{ position: absolute; bottom: -1px; left: 0; width: 100%; overflow: hidden; line-height: 0; transform: translateY(1px); }
-.hero-edge svg{ display: block; width: 100%; height: 100px; }
-
-/* Cards */
-.crop-card{ border: none; border-radius: 6px; overflow: visible; transition: transform .18s ease; }
-.crop-card:hover{ transform: translateY(-6px); box-shadow: 0 18px 40px rgba(0,0,0,0.08); }
-.crop-image-wrap{ position: relative; overflow: visible; border-top-left-radius: 6px; border-top-right-radius: 6px; }
-.crop-image-wrap img{ width:100%; height:220px; object-fit:cover; display:block; border-radius:6px 6px 0 0; }
-
-/* price pill */
-.price-pill{
-  position:absolute; 
-  left:50%; 
-  transform:translateX(-50%); 
-  bottom:-22px;
-  background:var(--primary-green); 
-  color:#fff; 
-  padding:8px 20px; 
-  border-radius:24px;
-  font-weight:700; 
-  font-size:.88rem; 
-  border:4px solid #fff; 
-  z-index: 10;   /* ⬅ lowered from 50 to 10 */
-  box-shadow:0 8px 20px rgba(62,162,62,0.18);
+.footer-bottom {
+  background: var(--footer-bottom);
+  padding: 16px 0;
+  color: #9a9a9a;
+}
+.footer-bottom a {
+  color: #9a9a9a;
+  text-decoration: none;
+}
+.footer-bottom a:hover {
+  color: #fff;
 }
 
-.price-pill::after{ content:""; position:absolute; left:50%; transform:translateX(-50%); bottom:-8px; width:36px; height:10px; background:#fff; border-radius:3px; z-index:-1; box-shadow:0 4px 8px rgba(0,0,0,0.04); }
-
-/* card body */
-.crop-card .card-body{ padding-top:30px; margin-top:12px; }
-.card-title{ margin-bottom: 0; margin-top: 6px; font-size: 1.05rem; color: #222; }
-
-/* Footer */
-.site-footer{ font-family:'Poppins', sans-serif; color:#d0d0d0; }
-.footer-top{ background: var(--footer-main); padding: 44px 0 36px; color: #cfcfcf; }
-.footer-logo{ height:44px; object-fit:contain; }
-.footer-desc{ color:#bdbdbd; margin-top:10px; }
-.socials .social-btn{ display:inline-flex; align-items:center; justify-content:center; width:34px; height:34px; border-radius:50%; background: transparent; color:#e8e8e8; border: 1px solid rgba(255,255,255,0.06); margin-right:8px; transition: all .15s ease; font-size:13px; }
-.socials .social-btn:hover{ background: rgba(255,255,255,0.03); transform: translateY(-3px); color:#fff; }
-
-.footer-heading{ color:#ffffff; font-weight:700; margin-bottom:16px; position:relative; padding-bottom:8px; font-size:14px; }
-.footer-heading::after{ content: ""; position:absolute; left:0; bottom:0; width:36px; height:4px; background:var(--primary-green); border-radius:3px; }
-
-.footer-links a{ color:#bfbfbf; display:block; padding:6px 0; text-decoration:none; }
-.footer-links a i{ color:#bfbfbf; font-size:10px; }
-.footer-blog-item .blog-title{ color:#fff; text-decoration:none; font-weight:600; line-height:1.18; }
-.footer-blog-item .blog-meta{ color:#bfbfbf; margin-top:6px; }
-.contact-list i{ color:#bfbfbf; margin-right:8px; }
-.subscribe-group{ width:100%; max-width:260px; }
-.subscribe-group .form-control{ border-radius:4px 0 0 4px; border-color: rgba(255,255,255,0.06); background:#fff; padding:8px 10px; }
-.subscribe-btn{ border-radius:0 4px 4px 0; background:var(--primary-green); color:#fff; border:none; padding: 8px 12px; display:inline-flex; align-items:center; justify-content:center; }
-
-.footer-bottom{ background: var(--footer-bottom); padding: 16px 0; color:#9a9a9a; }
-.footer-bottom a{ color:#9a9a9a; text-decoration:none; }
-.footer-bottom a:hover{ color:#fff; }
-
-@media (max-width: 991.98px){
-  .subscribe-group{ max-width:100%; }
-  .footer-top{ padding:30px 0; }
+/* =============== RESPONSIVE =============== */
+@media (max-width: 991.98px) {
+  .subscribe-group {
+    max-width: 100%;
+  }
+  .footer-top {
+    padding: 30px 0;
+  }
 }
-@media (max-width: 767.98px){
-  :root{ --hero-height: 220px; }
-  .price-pill{ bottom:-16px; padding: 6px 12px; font-size: 0.8rem; }
-  .price-pill::after{ width:28px; height:8px; bottom:-7px; }
-  .crop-image-wrap img{ height:180px; }
-  .crop-card .card-body{ padding-top:22px; }
+@media (max-width: 767.98px) {
+  :root {
+    --hero-height: 220px;
+  }
+  .price-pill {
+    bottom: -16px;
+    padding: 6px 12px;
+    font-size: 0.8rem;
+  }
+  .price-pill::after {
+    width: 28px;
+    height: 8px;
+    bottom: -7px;
+  }
+  .crop-image-wrap img {
+    height: 180px;
+  }
+  .crop-card .card-body {
+    padding-top: 22px;
+  }
 }
-@media (min-width: 992px){
-  .hero{ height: 360px; }
-  .crop-image-wrap img{ height: 240px; }
+@media (min-width: 992px) {
+  .hero {
+    height: 360px;
+  }
+  .crop-image-wrap img {
+    height: 240px;
+  }
 }
