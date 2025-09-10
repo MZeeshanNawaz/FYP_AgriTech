@@ -14,7 +14,8 @@ export default function Navbar({ search, setSearch }) {
           <ul className="navbar-nav mx-auto mb-2 mb-lg-0">
             <li className="nav-item"><Link className="nav-link" to="/">Home</Link></li>
             <li className="nav-item"><Link className="nav-link" to="/about">About</Link></li>
-            <li className="nav-item"><Link className="nav-link" to="/marketplace">Services</Link></li>
+            <li className="nav-item"><Link className="nav-link" to="/services">Services</Link></li>
+            <li className="nav-item"><Link className="nav-link" to="/marketplace">MarketPlace</Link></li>
             <li className="nav-item"><Link className="nav-link" to="/blog">Blog</Link></li>
             <li className="nav-item"><Link className="nav-link" to="/contact">Contact</Link></li>
           </ul>

@@ -58,6 +58,19 @@ export default function Register() {
                 {showPassword ? <FaEyeSlash /> : <FaEye />}
               </span>
             </div>
+             <div className="mb-3 position-relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                placeholder="Confirm your password"
+                className="form-control"
+              />
+              <span
+                className="toggle-password"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
+              </span>
+            </div>
             <div className="mb-3">
               <input type="tel" placeholder="Enter your phone number" className="form-control" />
             </div>

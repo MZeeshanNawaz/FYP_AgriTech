@@ -505,3 +505,96 @@
   font-weight: 400;
   color: #333;
 }
+
+/* ============================= */
+/* CONTACT PAGE STYLES           */
+/* ============================= */
+
+/* HERO SECTIONS (Contact) */
+
+.page-hero {
+  position: relative;
+  min-height: 260px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: #333;
+}
+
+.page-hero .hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.page-hero .hero-content {
+  position: relative;
+  z-index: 2;
+}
+
+.page-hero .breadcrumb {
+  font-size: 0.9rem;
+  color: #ddd;
+}
+
+.page-hero h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+/* Curvy Edge */
+.hero-edge {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+}
+
+.hero-edge svg {
+  display: block;
+  width: 100%;
+  height: 80px;
+}
+
+.contact-hero {
+  background: url("https://media.istockphoto.com/id/1786486973/photo/young-sprout-agricultural-technologies-banner.jpg?s=612x612&w=0&k=20&c=5RCxOczVxCdND-NLRx2LrlaYwnpexMY34by5C0ixL04=") center/cover no-repeat;
+}
+
+/* Info cards */
+.contact-card {
+  padding: 2rem;
+  color: #fff;
+  border-radius: 8px;
+  height: 100%;
+}
+.contact-card.about {
+  background: #3ea23e;
+}
+.contact-card.contact {
+  background: #f3c623;
+}
+.contact-card.address {
+  background: #e59e1b;
+}
+.contact-card h5 {
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+/* Form */
+.contact-form-box {
+  background: #fdfdf6;
+  border-radius: 8px;
+  border: 1px solid #eee;
+}
+.contact-form-box h6 {
+  font-size: 0.95rem;
+  margin-bottom: 0.2rem;
+}
