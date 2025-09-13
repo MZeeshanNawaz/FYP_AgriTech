@@ -1,4 +1,3 @@
-// src/server.ts
 import express, { Application, Request, Response } from "express";
 import cors from "cors";
 import config from "./config";
@@ -21,7 +20,6 @@ app.use(
 
 app.use(express.json());
 
-// basic health
 app.get("/", (_req: Request, res: Response) => {
   res.send("API is running...");
 });
