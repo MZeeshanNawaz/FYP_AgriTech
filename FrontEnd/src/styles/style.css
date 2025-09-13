@@ -40,15 +40,23 @@
   display: flex;
   align-items: center;
 }
+
 .hero-home .hero-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.35);
+  background: rgba(0, 0, 0, 0.7); 
 }
+
 .hero-home .hero-content {
   position: relative;
   z-index: 2;
   max-width: 600px;
+}
+
+.hero-home .hero-content h1,
+.hero-home .hero-content p {
+  color: #ffffff; 
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8); 
 }
 
 /* Hero About */
@@ -509,8 +517,6 @@
 /* ============================= */
 /* CONTACT PAGE STYLES           */
 /* ============================= */
-
-/* HERO SECTIONS (Contact) */
 
 .page-hero {
   position: relative;
