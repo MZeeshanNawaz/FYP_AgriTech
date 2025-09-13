@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from "react";
 import axios from "axios";
-import type { Product, Toast } from "../types";
+import type { Product, Toast } from "../types/index";
 
 const IMAGE_MAP: Record<string, string> = {
   corn: "https://cdn.prod.website-files.com/5ec959f99359c2ff953a4353/649cd83a6d9e586490d25fec_market-corn.jpg",

@@ -1,3 +1,4 @@
+// src/App.tsx
 import React, { useEffect, useState } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 
@@ -14,12 +15,17 @@ import About from "./pages/About";
 import Marketplace from "./pages/Marketplace";
 import Contact from "./pages/Contact";
 
+// static fallback products
 import localProducts from "./data/products";
-import type { Product, Toast } from "./types";
 
-// extend Toast with id used in state
-interface ToastWithId extends Toast {
+// ---------- Types ----------
+import { Product } from "./types";
+
+interface Toast {
   id: number;
+  title: string;
+  message: string;
+  type?: "success" | "danger" | "info" | "warning";
 }
 
 function AppContent() {
@@ -29,26 +35,20 @@ function AppContent() {
   const hideLayoutRoutes = ["/login", "/register"];
   const hideLayout = hideLayoutRoutes.includes(location.pathname);
 
-  // ----- state -----
+  // ----- states -----
   const [dbProducts, setDbProducts] = useState<Product[]>([]);
   const [search, setSearch] = useState<string>("");
-  const [toasts, setToasts] = useState<ToastWithId[]>([]);
+  const [toasts, setToasts] = useState<Toast[]>([]);
   const [subscribeEmail, setSubscribeEmail] = useState<string>("");
 
   // merge local + db products
   const products: Product[] = [...localProducts, ...dbProducts];
 
-  // fetch DB products (won't crash if backend is down)
+  // fetch DB products
   useEffect(() => {
     fetch("http://localhost:5000/api/products")
       .then((res) => res.json())
-      .then((data: unknown) => {
-        if (Array.isArray(data)) {
-          setDbProducts(data as Product[]);
-        } else {
-          setDbProducts([]);
-        }
-      })
+      .then((data) => setDbProducts(Array.isArray(data) ? data : []))
       .catch((err) => console.error("Failed to fetch DB products:", err));
   }, []);
 
@@ -58,7 +58,12 @@ function AppContent() {
     message,
     type = "success",
     timeout = 3000,
-  }: Toast) => {
+  }: {
+    title: string;
+    message: string;
+    type?: "success" | "danger" | "info" | "warning";
+    timeout?: number;
+  }) => {
     const id = Date.now();
     setToasts((prev) => [...prev, { id, title, message, type }]);
     setTimeout(
@@ -115,7 +120,6 @@ function AppContent() {
         <>
           <TopStripe />
           <ContactStrip />
-          {/* pass search props because Navbar uses them */}
           <Navbar search={search} setSearch={setSearch} />
         </>
       )}
@@ -123,7 +127,7 @@ function AppContent() {
       {/* toast notifications */}
       <ToastsContainer
         toasts={toasts}
-        removeToast={(id) =>
+        removeToast={(id: number) =>
           setToasts((prev) => prev.filter((t) => t.id !== id))
         }
       />
