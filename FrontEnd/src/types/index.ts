@@ -10,13 +10,13 @@ export interface Toast {
 
 // types/Product.ts
 export interface Product {
-  _id?: string; // DB product
-  id?: string | number; // Local product
+  _id?: string;           // from MongoDB
+  id?: number | string;   // from local products
   title: string;
-  price: string;
+  price: string;          // always string ("PKR 2,500")
   image: string;
-  author: string;
-  contactNumber: string;
-  cropType?: string; 
+  author?: string;
+  contactNumber?: string;
 }
+
 

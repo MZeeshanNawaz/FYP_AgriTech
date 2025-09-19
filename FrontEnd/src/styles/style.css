@@ -30,7 +30,6 @@
 }
 
 /* =============== HERO SECTIONS =============== */
-
 /* Hero Home */
 .hero-home {
   position: relative;
@@ -603,4 +602,36 @@
 .contact-form-box h6 {
   font-size: 0.95rem;
   margin-bottom: 0.2rem;
+}
+
+/* Hero Services */
+.hero-services {
+  background: url("https://media.istockphoto.com/id/1786486973/photo/young-sprout-agricultural-technologies-banner.jpg?s=612x612&w=0&k=20&c=5RCxOczVxCdND-NLRx2LrlaYwnpexMY34by5C0ixL04=") center/cover no-repeat;
+  height: 40vh;
+  position: relative;
+}
+.hero-services .hero-overlay {
+  background: rgba(0, 0, 0, 0.5);
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+}
+.hero-services .container {
+  position: relative;
+  z-index: 2;
+}
+
+/* Curvy Edge */
+.hero-edge {
+  position: absolute;
+  bottom: -1px; 
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+}
+
+.hero-edge svg {
+  display: block;
+  width: 100%;
+  height: 80px;
 }

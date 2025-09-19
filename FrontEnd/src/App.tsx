@@ -14,6 +14,7 @@ import Home from "./pages/Home";
 import About from "./pages/About";
 import Marketplace from "./pages/Marketplace";
 import Contact from "./pages/Contact";
+import Services from "./pages/services";
 
 // static fallback products
 import localProducts from "./data/products";
@@ -152,6 +153,7 @@ function AppContent() {
         <Route path="/register" element={<Register />} />
         <Route path="*" element={<Home />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/services" element={<Services />} /> 
       </Routes>
 
       {!hideLayout && (
