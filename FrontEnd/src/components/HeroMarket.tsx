@@ -3,7 +3,7 @@ import CurvyEdge from "./CurvyEdge";
 
 const HeroMarket: React.FC = () => {
   return (
-    <header className="hero position-relative">
+    <header className="hero hero-section position-relative">
       <div className="hero-overlay" />
       <div className="container hero-content text-center text-white">
         <small className="text-uppercase breadcrumb">Home / Marketplace</small>

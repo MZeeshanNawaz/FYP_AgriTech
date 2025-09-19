@@ -1,9 +1,6 @@
 import React from "react";
+import {CurvyEdgeProps} from "../types/index"
 
-interface CurvyEdgeProps {
-  color?: string;
-  className?: string;
-}
 
 const CurvyEdge: React.FC<CurvyEdgeProps> = ({ color = "#fff", className = "" }) => {
   return (

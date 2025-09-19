@@ -1,10 +1,5 @@
 import React from "react";
-import type { Product } from "../types/index";
-
-export interface ProductCardProps {
-  product: Product;
-  onDelete?: (id: string) => void;
-}
+import { ProductCardProps } from "../types/index";
 
 export default function ProductCard({ product, onDelete }: ProductCardProps) {
   const { title, image, price, contactNumber, author, _id } = product;

@@ -1,12 +1,6 @@
 import React from "react";
 import ProductCard from "./ProductCard";
-import type { Product } from "../types";
-
-export interface ProductGridProps {
-  products?: Product[];           
-  onDelete?: (id: string) => void;
-  search?: string;
-}
+import type { ProductGridProps } from "../types";
 
 export default function ProductGrid({ products = [], onDelete, search = "" }: ProductGridProps) {
   const q = search?.trim().toLowerCase() ?? "";

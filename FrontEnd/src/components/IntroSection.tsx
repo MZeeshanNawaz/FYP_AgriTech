@@ -1,6 +1,6 @@
-import React from "react"
+import React from "react";
 
-export default function IntroSection() {
+const IntroSection: React.FC = () => {
   return (
     <section id="intro" className="py-5">
       <div className="container">
@@ -28,5 +28,7 @@ export default function IntroSection() {
         </div>
       </div>
     </section>
-  )
-}
+  );
+};
+
+export default IntroSection;

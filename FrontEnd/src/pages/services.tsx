@@ -4,15 +4,16 @@ import CurvyEdge from "../components/CurvyEdge";
 export default function Services() {
   return (
     <div className="services-page">
-      {/* Hero Section */}
-      <header className="hero hero-services position-relative d-flex align-items-center justify-content-center">
-        <div className="hero-overlay" />
-        <div className="container hero-content text-center text-white">
-          <small className="text-uppercase breadcrumb">Home / Services</small>
-          <h1 className="display-5 fw-bold">Services</h1>
-        </div>
-        <CurvyEdge color="#fff" />
-      </header>
+         <header className="hero hero-section position-relative">
+           <div className="hero-overlay" />
+           <div className="container hero-content text-center text-white">
+             <small className="text-uppercase breadcrumb">Home / Services</small>
+             <h1 className="display-5 fw-bold">Our Services</h1>
+           </div>
+     
+           <CurvyEdge color="#fff" />
+         </header>
+       );
 
       {/* Services Section */}
       <section className="py-5">

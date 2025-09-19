@@ -1,9 +1,9 @@
 import React from "react";
-import CurvyEdge from "./CurvyEdge";
+import CurvyEdge from "./CurvyEdge"; 
 
-const HeroAbout = () => {
+const HeroAbout: React.FC = () => {
   return (
-    <header className="hero hero-about position-relative">
+    <header className="hero hero-section position-relative">
       <div className="hero-overlay" />
       <div className="container hero-content text-center text-white">
         <small className="text-uppercase breadcrumb">Home / About</small>

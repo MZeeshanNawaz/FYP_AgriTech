@@ -1,6 +1,7 @@
 import React from "react";
+import { FooterProps } from "../types";
 
-export default function Footer({ subscribeEmail, setSubscribeEmail, handleSubscribe }) {
+const Footer: React.FC<FooterProps> = ({ subscribeEmail, setSubscribeEmail, handleSubscribe }) => {
   return (
     <footer className="site-footer">
       <div className="footer-top">
@@ -59,7 +60,7 @@ export default function Footer({ subscribeEmail, setSubscribeEmail, handleSubscr
                     <button
                       className="btn subscribe-btn"
                       type="button"
-                      onClick={handleSubscribe} // triggers toast
+                      onClick={handleSubscribe}
                     >
                       <i className="fa-solid fa-paper-plane"></i>
                     </button>
@@ -83,4 +84,6 @@ export default function Footer({ subscribeEmail, setSubscribeEmail, handleSubscr
       </div>
     </footer>
   );
-}
+};
+
+export default Footer;

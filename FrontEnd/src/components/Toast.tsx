@@ -1,6 +1,7 @@
 import React from "react";
+import {Toast} from "../types/index"
 
-export default function Toast({ message, type }) {
+const Toast: React.FC<Toast> = ({ message, type }) => {
   return (
     <div
       className={`toast align-items-center text-bg-${type} border-0 show position-fixed bottom-0 end-0 m-3`}
@@ -17,4 +18,6 @@ export default function Toast({ message, type }) {
       </div>
     </div>
   );
-}
+};
+
+export default Toast;

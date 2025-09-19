@@ -1,11 +1,13 @@
-import React from "react"
-import Navbar from "./Navbar"
-import Footer from "./Footer"
+import React, { ReactNode } from "react";
+import Navbar from "./Navbar";
+import Footer from "./Footer";
+import { Toast, ToastsContainerProps } from "../types/index";
 import ToastsContainer from "./ToastsContainer"
-import TopStripe from "./TopStripe"
-import ContactStrip from "./ContactStrip"
+import TopStripe from "./TopStripe";
+import ContactStrip from "./ContactStrip";
+import { LayoutProps } from "../types/index";
 
-export default function Layout({
+const Layout: React.FC<LayoutProps> = ({
   children,
   toasts,
   removeToast,
@@ -13,11 +15,11 @@ export default function Layout({
   setSearch,
   subscribeEmail,
   setSubscribeEmail,
-  handleSubscribe
-}) {
+  handleSubscribe,
+}) => {
   return (
     <>
-      {/* ✅ Stripes above navbar */}
+      {/* Stripes above navbar */}
       <TopStripe />
       <ContactStrip />
       <Navbar search={search} setSearch={setSearch} />
@@ -32,5 +34,7 @@ export default function Layout({
 
       <ToastsContainer toasts={toasts} removeToast={removeToast} />
     </>
-  )
-}
+  );
+};
+
+export default Layout;

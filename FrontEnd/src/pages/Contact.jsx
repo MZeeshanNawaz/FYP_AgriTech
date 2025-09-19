@@ -4,16 +4,16 @@ import CurvyEdge from "../components/CurvyEdge";
 export default function Contact() {
   return (
     <div className="contact-page">
-      {/* Hero */}
-      <header className="hero contact-hero position-relative text-center text-white">
-        <div className="hero-overlay" />
-        <div className="container hero-content">
-          <small className="text-uppercase breadcrumb">Home / Contact</small>
-          <h1 className="display-5 fw-bold">Contact</h1>
-        </div>
-        <CurvyEdge color="#fff" />
-      </header>
-
+         <header className="hero hero-section position-relative">
+           <div className="hero-overlay" />
+           <div className="container hero-content text-center text-white">
+             <small className="text-uppercase breadcrumb">Home / Contact</small>
+             <h1 className="display-5 fw-bold">Contact Us</h1>
+           </div>
+     
+           <CurvyEdge color="#fff" />
+         </header>
+       );
       {/* Info Cards */}
       <section className="container py-5">
         <div className="row g-4 text-center">

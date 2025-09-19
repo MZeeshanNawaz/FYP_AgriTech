@@ -1,6 +1,8 @@
-import React from "react"
+import React from "react";
+import "../styles/style.css"; 
+import CurvyEdge from "./CurvyEdge"; 
 
-export default function HeroHome() {
+const HeroHome: React.FC = () => {
   return (
     <header className="hero-home position-relative">
       <div className="hero-overlay" />
@@ -14,6 +16,9 @@ export default function HeroHome() {
           Discover More
         </a>
       </div>
+      <CurvyEdge color="#fff" />
     </header>
-  )
-}
+  );
+};
+
+export default HeroHome;

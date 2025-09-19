@@ -1,17 +1,12 @@
 import React, { useMemo, useState } from "react";
 import axios from "axios";
-import type { Product, Toast } from "../types/index";
+import type { Product, SellCropProps } from "../types/index";
 
 const IMAGE_MAP: Record<string, string> = {
   corn: "https://cdn.prod.website-files.com/5ec959f99359c2ff953a4353/649cd83a6d9e586490d25fec_market-corn.jpg",
   rice: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7zHT1yn42JQ_mQ0oSP7vXuDwvEAeZj_2-XQ&s",
   wheat: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqCZ8I2DKIrzZtkFEJvNCUoob_AzgTbLKLiw&s",
 };
-
-export interface SellCropProps {
-  onCreated?: (p: Product) => void;
-  showToast?: (t: Toast) => void;
-}
 
 export default function SellCrop({ onCreated, showToast }: SellCropProps) {
   const [title, setTitle] = useState<string>("");
@@ -36,7 +31,7 @@ export default function SellCrop({ onCreated, showToast }: SellCropProps) {
     e.preventDefault();
 
     if (!title || !price || !author || !contactNumber || !cropType) {
-      showToast?.({ title: "Error", message: "Please fill all fields.", type: "danger" });
+      showToast?.({id: Date.now(), title: "Error", message: "Please fill all fields.", type: "danger" });
       return;
     }
 
@@ -73,7 +68,7 @@ export default function SellCrop({ onCreated, showToast }: SellCropProps) {
       }
     } catch (err) {
       console.error("Create product failed:", err);
-      showToast?.({ title: "Error", message: "Failed to list item.", type: "danger" });
+      showToast?.({id: Date.now(),title: "Error", message: "Failed to list item.", type: "danger" });
     }
   }
 
