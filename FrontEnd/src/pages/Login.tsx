@@ -2,17 +2,26 @@ import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
-export default function Login() {
-  const [showPassword, setShowPassword] = useState(false);
+const Login = () => {
+  const [showPassword, setShowPassword] = useState<boolean>(false);
   const location = useLocation();
+
+  // handle form submit
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log("Login form submitted");
+    // You can add login API call here
+  };
 
   return (
     <div className="login-wrapper d-flex align-items-center justify-content-center min-vh-100">
       <div className="login-card d-flex rounded shadow overflow-hidden">
-        
         {/* Left image */}
         <div className="login-image d-none d-md-block">
-          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTshHMu6YHykL6VXh6Ka4lfLN0xQAgqXi02OA&s" alt="Login Visual" />
+          <img
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTshHMu6YHykL6VXh6Ka4lfLN0xQAgqXi02OA&s"
+            alt="Login Visual"
+          />
         </div>
 
         {/* Right form */}
@@ -38,19 +47,26 @@ export default function Login() {
           </div>
 
           {/* Form */}
-          <form>
+          <form onSubmit={handleSubmit}>
             <div className="mb-3 position-relative">
-              <input type="email" placeholder="Enter your email" className="form-control" />
+              <input
+                type="email"
+                placeholder="Enter your email"
+                className="form-control"
+                required
+              />
             </div>
             <div className="mb-3 position-relative">
               <input
                 type={showPassword ? "text" : "password"}
                 placeholder="Enter Password"
                 className="form-control"
+                required
               />
               <span
                 className="toggle-password"
                 onClick={() => setShowPassword(!showPassword)}
+                style={{ cursor: "pointer" }}
               >
                 {showPassword ? <FaEyeSlash /> : <FaEye />}
               </span>
@@ -70,4 +86,6 @@ export default function Login() {
       </div>
     </div>
   );
-}
+};
+
+export default Login;

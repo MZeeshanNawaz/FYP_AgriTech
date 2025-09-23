@@ -1,7 +1,7 @@
 import React from "react";
 
-const IntroSection: React.FC = () => {
-  return (
+const IntroSection = () => {
+ return (
     <section id="intro" className="py-5">
       <div className="container">
         <div className="row align-items-center g-5">

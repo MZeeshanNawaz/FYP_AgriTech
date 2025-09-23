@@ -1,6 +1,6 @@
 import React from "react";
 
-const ContactStrip: React.FC = () => {
+const ContactStrip = () => {
   return (
     <div className="contact-strip bg-light py-2">
       <div className="container d-flex align-items-center justify-content-between">

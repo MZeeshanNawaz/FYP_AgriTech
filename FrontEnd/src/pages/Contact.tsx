@@ -1,19 +1,20 @@
 import React from "react";
 import CurvyEdge from "../components/CurvyEdge";
 
-export default function Contact() {
+const Contact = () => {
   return (
     <div className="contact-page">
-         <header className="hero hero-section position-relative">
-           <div className="hero-overlay" />
-           <div className="container hero-content text-center text-white">
-             <small className="text-uppercase breadcrumb">Home / Contact</small>
-             <h1 className="display-5 fw-bold">Contact Us</h1>
-           </div>
-     
-           <CurvyEdge color="#fff" />
-         </header>
-       );
+      {/* Hero Section */}
+      <header className="hero hero-section position-relative">
+        <div className="hero-overlay" />
+        <div className="container hero-content text-center text-white">
+          <small className="text-uppercase breadcrumb">Home / Contact</small>
+          <h1 className="display-5 fw-bold">Contact Us</h1>
+        </div>
+
+        <CurvyEdge color="rgba(255, 255, 255, 1)" />
+      </header>
+
       {/* Info Cards */}
       <section className="container py-5">
         <div className="row g-4 text-center">
@@ -48,6 +49,7 @@ export default function Contact() {
       {/* Map + Form */}
       <section className="container py-5">
         <div className="row g-4">
+          {/* Google Map */}
           <div className="col-lg-6">
             <iframe
               title="AgriTech Location"
@@ -61,6 +63,7 @@ export default function Contact() {
             />
           </div>
 
+          {/* Contact Form */}
           <div className="col-lg-6">
             <div className="contact-form-box p-4 h-100 rounded shadow-sm">
               <h6 className="text-success">Contact us</h6>
@@ -75,7 +78,9 @@ export default function Contact() {
                 <div className="mb-3">
                   <textarea rows={4} className="form-control" placeholder="Write a Message" required />
                 </div>
-                <button type="submit" className="btn btn-success px-4">Send a Message</button>
+                <button type="submit" className="btn btn-success px-4">
+                  Send a Message
+                </button>
               </form>
             </div>
           </div>
@@ -83,4 +88,6 @@ export default function Contact() {
       </section>
     </div>
   );
-}
+};
+
+export default Contact;

@@ -1,7 +1,7 @@
 import React from "react";
 import CurvyEdge from "./CurvyEdge";
 
-const HeroMarket: React.FC = () => {
+const HeroMarket = () => {
   return (
     <header className="hero hero-section position-relative">
       <div className="hero-overlay" />

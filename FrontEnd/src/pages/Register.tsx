@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
-export default function Register() {
-  const [showPassword, setShowPassword] = useState(false);
+const Register = () => {
+  const [showPassword, setShowPassword] = useState<boolean>(false); 
   const location = useLocation();
 
   return (
@@ -12,7 +12,10 @@ export default function Register() {
         
         {/* Left image */}
         <div className="login-image d-none d-md-block">
-          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTshHMu6YHykL6VXh6Ka4lfLN0xQAgqXi02OA&s" alt="Register Visual" />
+          <img
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTshHMu6YHykL6VXh6Ka4lfLN0xQAgqXi02OA&s"
+            alt="Register Visual"
+          />
         </div>
 
         {/* Right form */}
@@ -40,10 +43,18 @@ export default function Register() {
           {/* Form */}
           <form>
             <div className="mb-3">
-              <input type="text" placeholder="Enter your username" className="form-control" />
+              <input
+                type="text"
+                placeholder="Enter your username"
+                className="form-control"
+              />
             </div>
             <div className="mb-3">
-              <input type="email" placeholder="Enter your email" className="form-control" />
+              <input
+                type="email"
+                placeholder="Enter your email"
+                className="form-control"
+              />
             </div>
             <div className="mb-3 position-relative">
               <input
@@ -58,7 +69,7 @@ export default function Register() {
                 {showPassword ? <FaEyeSlash /> : <FaEye />}
               </span>
             </div>
-             <div className="mb-3 position-relative">
+            <div className="mb-3 position-relative">
               <input
                 type={showPassword ? "text" : "password"}
                 placeholder="Confirm your password"
@@ -72,7 +83,11 @@ export default function Register() {
               </span>
             </div>
             <div className="mb-3">
-              <input type="tel" placeholder="Enter your phone number" className="form-control" />
+              <input
+                type="tel"
+                placeholder="Enter your phone number"
+                className="form-control"
+              />
             </div>
 
             <div className="mb-3">
@@ -89,4 +104,6 @@ export default function Register() {
       </div>
     </div>
   );
-}
+};
+
+export default Register;

@@ -1,6 +1,6 @@
 import React from "react";
 
-const TopStripe: React.FC = () => {
+const TopStripe = () => {
   return <div className="top-stripe"></div>;
 };
 

@@ -1,7 +1,7 @@
 import React from "react";
 import CurvyEdge from "./CurvyEdge"; 
 
-const HeroAbout: React.FC = () => {
+const HeroAbout = () => {
   return (
     <header className="hero hero-section position-relative">
       <div className="hero-overlay" />

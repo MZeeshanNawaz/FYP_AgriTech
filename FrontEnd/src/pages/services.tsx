@@ -1,19 +1,18 @@
 import React from "react";
 import CurvyEdge from "../components/CurvyEdge";
 
-export default function Services() {
+const Services = () => {
   return (
     <div className="services-page">
-         <header className="hero hero-section position-relative">
-           <div className="hero-overlay" />
-           <div className="container hero-content text-center text-white">
-             <small className="text-uppercase breadcrumb">Home / Services</small>
-             <h1 className="display-5 fw-bold">Our Services</h1>
-           </div>
-     
-           <CurvyEdge color="#fff" />
-         </header>
-       );
+      <header className="hero hero-section position-relative">
+        <div className="hero-overlay" />
+        <div className="container hero-content text-center text-white">
+          <small className="text-uppercase breadcrumb">Home / Services</small>
+          <h1 className="display-5 fw-bold">Our Services</h1>
+        </div>
+
+        <CurvyEdge color="#fff" />
+      </header>
 
       {/* Services Section */}
       <section className="py-5">
@@ -119,3 +118,5 @@ export default function Services() {
     </div>
   );
 }
+
+export default Services;

@@ -71,3 +71,18 @@ export interface FooterProps {
   setSubscribeEmail: React.Dispatch<React.SetStateAction<string>>;
   handleSubscribe: () => void;
 }
+
+export interface TeamMember {
+  id: number;
+  name: string;
+  role: string;
+  img: string;
+}
+
+export interface MarketplaceProps {
+  products?: Product[]; // merged static + db from App
+  search?: string;
+  onDelete?: (id: string) => void;
+  onCreated?: (p: Product) => void;
+  showToast?: (t: Toast) => void;
+}

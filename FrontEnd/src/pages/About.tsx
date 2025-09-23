@@ -1,8 +1,9 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "../styles/style.css";
-import HeroAbout from "../components/HeroAbout"; // use your existing hero component
+import HeroAbout from "../components/HeroAbout";
+import { TeamMember } from "../types/index"
 
-const TEAM = [
+const TEAM: TeamMember[] = [
   {
     id: 1,
     name: "Husnain Khalid",
@@ -23,10 +24,9 @@ const TEAM = [
   },
 ];
 
-export default function About() {
+const About = () => {
   return (
     <>
-      {/* Hero (kept in a separate component for consistency) */}
       <HeroAbout />
 
       {/* Intro / Who we are */}
@@ -184,3 +184,5 @@ export default function About() {
     </>
   );
 }
+
+export default About;

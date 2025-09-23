@@ -8,7 +8,7 @@ const services: Service[] = [
   { id: 4, title: "Farmer Marketplace", image: "https://www.shutterstock.com/image-photo/colorful-cereal-seeds-wheat-ears-260nw-19464268.jpg" },
 ];
 
-const Services: React.FC = () => {
+const Services = () => {
   return (
     <section id="services" className="py-5 bg-light">
       <div className="container text-center">
