@@ -47,6 +47,11 @@ const Navbar: React.FC<NavbarProps> = ({ search, setSearch }) => {
                 Contact
               </Link>
             </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/detect">
+                DiseaseDetection
+              </Link>
+            </li>
           </ul>
 
           {/* Login/Register */}

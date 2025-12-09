@@ -540,6 +540,35 @@
   margin-bottom: 0.2rem;
 }
 
+/* =============================
+   Disease Detection Page Styles
+============================= */
+
+.disease-page .hero-section {
+  position: relative;
+  height: 350px;
+}
+
+.disease-page .hero-section .overlay {
+  background: rgba(0, 0, 0, 0.55);
+  position: absolute;
+  inset: 0;
+}
+
+.disease-page .upload-section {
+  background-color: #2f9e44; /* Agritech green */
+}
+
+.disease-page .preview-container img {
+  border: 2px solid #dee2e6;
+  background-color: #fff;
+}
+
+.disease-page .result-section {
+  background-color: #f8f9fa;
+}
+
+
 
 
 
