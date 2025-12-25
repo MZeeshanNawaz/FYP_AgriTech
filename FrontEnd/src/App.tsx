@@ -16,6 +16,7 @@ import Marketplace from "./pages/Marketplace";
 import Contact from "./pages/Contact";
 import Services from "./pages/services";
 import Blog from './pages/Blog';
+import Weather from './pages/WeatherForecasting';
 // static fallback products
 import localProducts from "./data/products";
 
@@ -157,6 +158,7 @@ function AppContent() {
         <Route path="/services" element={<Services />} /> 
         <Route path="/detect" element={<DiseaseDetection />} /> 
         <Route path="/blog" element={<Blog />} />
+        <Route path="/weather" element={<Weather />} />
       </Routes>
 
       {!hideLayout && (
