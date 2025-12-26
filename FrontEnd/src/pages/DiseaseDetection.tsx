@@ -5,7 +5,7 @@ const DiseaseDetection = () => {
   const [image, setImage] = useState<string | null>(null)
   const [file, setFile] = useState<File | null>(null)
   const [fileName, setFileName] = useState<string>("")
-  const [result, setResult] = useState<string>("")
+  const [result, setResult] = useState<any>(null)
   const [loading, setLoading] = useState<boolean>(false)
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -24,12 +24,12 @@ const DiseaseDetection = () => {
     e.preventDefault()
 
     if (!file) {
-      setResult("❌ Please upload an image first.")
+      setResult({ error: "❌ Please upload an image first." })
       return
     }
 
     setLoading(true)
-    setResult("⏳ Processing image...")
+    setResult(null)
 
     const formData = new FormData()
     formData.append("image", file)
@@ -41,17 +41,9 @@ const DiseaseDetection = () => {
       })
 
       const data = await response.json()
-
-      if (data.error) {
-        setResult(`❌ ${data.error}`)
-      } else {
-        setResult(
-          `🌱 Crop: ${data.crop} (${data.crop_confidence}%)\n` +
-          `🦠 Disease: ${data.disease} (${data.disease_confidence}%)`
-        )
-      }
+      setResult(data)
     } catch (error) {
-      setResult("❌ Failed to connect to server.")
+      setResult({ error: "❌ Failed to connect to server." })
     } finally {
       setLoading(false)
     }
@@ -59,7 +51,8 @@ const DiseaseDetection = () => {
 
   return (
     <div className="disease-page">
-      {/* Hero Section */}
+
+      {/* HERO SECTION */}
       <header className="hero hero-section position-relative">
         <div className="hero-overlay" />
         <div className="container hero-content text-center text-white">
@@ -69,11 +62,10 @@ const DiseaseDetection = () => {
             Upload a leaf image and let our AI model detect possible crop diseases instantly.
           </p>
         </div>
-
         <CurvyEdge color="rgba(255, 255, 255, 1)" />
       </header>
 
-      {/* Description Section */}
+      {/* HOW IT WORKS */}
       <section className="container py-5 text-center text-md-start">
         <div className="row align-items-center">
           <div className="col-md-6">
@@ -84,17 +76,18 @@ const DiseaseDetection = () => {
               prevention solutions to boost crop yield.
             </p>
           </div>
+
           <div className="col-md-6 text-center">
             <img
-              src="https://cdn.dribbble.com/userupload/15954915/file/original-8a82090551c881e4ea170f035258f7bb.png?resize=1200x900&vertical=center"
-              alt="Leaf closeup"
+              src="https://cdn.dribbble.com/userupload/15954915/file/original-8a82090551c881e4ea170f035258f7bb.png"
+              alt="Leaf"
               className="img-fluid rounded shadow-sm"
             />
           </div>
         </div>
       </section>
 
-      {/* Upload Section */}
+      {/* UPLOAD */}
       <section className="upload-section py-5 text-center text-white">
         <div className="container">
           <h4 className="text-warning fw-semibold">Agriculture Innovation</h4>
@@ -105,18 +98,15 @@ const DiseaseDetection = () => {
             className="bg-white p-4 rounded shadow-sm text-dark upload-form mx-auto"
             style={{ maxWidth: "600px" }}
           >
-            <div className="mb-3">
-              <input
-                type="file"
-                accept="image/*"
-                className="form-control"
-                id="fileUpload"
-                onChange={handleFileChange}
-              />
-            </div>
+            <input
+              type="file"
+              accept="image/*"
+              className="form-control"
+              onChange={handleFileChange}
+            />
 
             {image && (
-              <div className="preview-container mb-3">
+              <div className="preview-container mt-3">
                 <img
                   src={image}
                   alt="Preview"
@@ -127,25 +117,70 @@ const DiseaseDetection = () => {
               </div>
             )}
 
-            <button type="submit" className="btn btn-success px-4" disabled={loading}>
+            <button type="submit" className="btn btn-success px-4 mt-3" disabled={loading}>
               {loading ? "Processing..." : "Continue"}
             </button>
           </form>
         </div>
       </section>
 
-      {/* Result Section */}
+      {/* RESULT SECTION */}
       <section className="result-section py-5 bg-light">
         <div className="container">
-          <h4 className="fw-semibold mb-3">Result</h4>
+          <h4 className="fw-semibold mb-3">Result(نتیجہ)</h4>
+
           <div className="p-4 border rounded bg-white shadow-sm">
-            {result ? (
-              <pre className="mb-0">{result}</pre>
-            ) : (
-              <p className="text-muted mb-0">
-                Upload an image and click Continue to view detection results here.
-              </p>
+
+            {/* ERRORS */}
+            {result?.error && (
+              <p className="text-danger">{result.error}</p>
             )}
+
+            {/* SHOW RESULT */}
+            {result && !result.error && (
+              <>
+                {/* MAIN RESULT */}
+                <pre className="mb-3">
+🌱 Crop: {result.crop} ({result.top3 ? result.top3[0].confidence : 0}%)
+🦠 Disease: {result.disease} ({result.top3 ? result.top3[0].confidence : 0}%)
+                </pre>
+
+                {/* TOP 3 PREDICTIONS */}
+                <h5>Top 3 Predictions(بہترین تین پیش گوئیاں) </h5>
+                {result.top3?.map((p: any, i: number) => (
+                  <div key={i} className="mb-2">
+                    <small>
+                      {p.disease}: {p.confidence}%
+                    </small>
+                    <div className="progress">
+                      <div
+                        className="progress-bar bg-success"
+                        style={{ width: `${p.confidence}%` }}
+                      ></div>
+                    </div>
+                  </div>
+                ))}
+
+                <hr />
+
+                {/* TREATMENT SECTION */}
+                <h5>Treatment Recommendation</h5>
+                <p><b>Spray:</b> {result.treatment?.spray}</p>
+                <p><b>Fertilizer:</b> {result.treatment?.fertilizer}</p>
+                <p><b>Advice:</b> {result.treatment?.advice}</p>
+
+                <hr />
+
+                {/* URDU TRANSLATION */}
+                <h5>بیماری اور علاج</h5>
+                <p><b>فصل:</b> {result.crop}</p>
+                <p><b>بیماری:</b> {result.disease}</p>
+                <p><b>سپرے:</b> {result.treatment?.spray}</p>
+                <p><b>کھاد:</b> {result.treatment?.fertilizer}</p>
+                <p><b>مشورہ:</b> {result.treatment?.advice}</p>
+              </>
+            )}
+
           </div>
         </div>
       </section>

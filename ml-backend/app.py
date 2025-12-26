@@ -6,129 +6,187 @@ from PIL import Image
 import io
 import logging
 
-# ================= APP SETUP =================
 app = Flask(__name__)
 CORS(app)
 
 logging.basicConfig(level=logging.INFO)
 
 # ================= LOAD MODELS =================
-crop_model = tf.keras.models.load_model(
-    "models/crop_identifier.h5",
-    compile=False
-)
+crop_model = tf.keras.models.load_model("models/crop_identifier.h5", compile=False)
+wheat_model = tf.keras.models.load_model("models/wheat_disease_model.h5", compile=False)
+rice_model  = tf.keras.models.load_model("models/rice_disease_model.h5", compile=False)
+corn_model  = tf.keras.models.load_model("models/corn_disease_model.h5", compile=False)
 
-wheat_model = tf.keras.models.load_model(
-    "models/wheat_disease_model.h5",
-    compile=False
-)
-rice_model = tf.keras.models.load_model(
-    "models/rice_disease_model.h5",
-    compile=False
-)
-corn_model = tf.keras.models.load_model(
-    "models/corn_disease_model.h5",
-    compile=False
-)
+# ================= CLASSES =================
+CROP_CLASSES = ["Wheat", "Rice", "Corn"]
 
-# ================= CLASS LABELS =================
-# ⚠️ MUST MATCH train_gen.class_indices EXACTLY
-CROP_CLASSES = ["Corn", "Rice", "Wheat"]
-
-WHEAT_DISEASE_CLASSES = [
-    "Aphid",
-    "Black Rust",
-    "Blast",
-    "Brown Rust",
-    "Common Root Rot",
-    "Fusarium Head Blight",
-    "Healthy",
-    "Leaf Blight",
-    "Mildew",
-    "Mite",
-    "Septoria",
-    "Smut",
-    "Stem Fly",
-    "Tan Spot",
-    "Yellow Rust"
+WHEAT_CLASSES = [
+    "Aphid","Black Rust","Blast","Brown Rust","Common Root Rot",
+    "Fusarium Head Blight","Healthy","Leaf Blight","Mildew",
+    "Mite","Septoria","Smut","Stem Fly","Tan Spot","Yellow Rust"
 ]
 
-RICE_DISEASE_CLASSES = [
-    "Bacterial Blight",
-    "Blast",
-    "Brown Spot",
-    "Tungro"
-]
+RICE_CLASSES = ["Bacterial Blight", "Blast", "Brown Spot", "Tungro"]
 
-CORN_DISEASE_CLASSES = [
-    "Common Rust",
-    "Gray Leaf Spot",
-    "Blight",
-    "Healthy"
-]
+CORN_CLASSES = ["Common Rust", "Gray Leaf Spot", "Blight", "Healthy"]
+
+# ================= TREATMENT DATA =================
+TREATMENT_DB = {
+
+    # ---- Wheat ----
+    "Aphid": {
+        "spray": "Imidacloprid / Neem Oil",
+        "fertilizer": "Potassium-rich fertilizer",
+        "advice": "Avoid excessive nitrogen (زیادہ نائٹروجن کے استعمال سے گریز کریں)"
+    },
+    "Black Rust": {
+        "spray": "Propiconazole / Tebuconazole",
+        "fertilizer": "Balanced NPK",
+        "advice": "Use resistant wheat varieties (زنگ سے محفوظ اقسام کاشت کریں)"
+    },
+    "Blast": {
+        "spray": "Tricyclazole",
+        "fertilizer": "Silicon-based fertilizer",
+        "advice": "Avoid excess nitrogen (نائٹروجن کی زیادتی سے بچیں)"
+    },
+    "Brown Rust": {
+        "spray": "Mancozeb",
+        "fertilizer": "Balanced NPK",
+        "advice": "Early fungicide application (ابتدائی مرحلے پر سپرے کریں)"
+    },
+    "Common Root Rot": {
+        "spray": "Carbendazim",
+        "fertilizer": "Organic compost",
+        "advice": "Improve drainage (پانی کے نکاس کو بہتر بنائیں)"
+    },
+    "Fusarium Head Blight": {
+        "spray": "Tebuconazole",
+        "fertilizer": "Potassium fertilizer",
+        "advice": "Avoid late irrigation (آخری مرحلے پر پانی نہ لگائیں)"
+    },
+    "Leaf Blight": {
+        "spray": "Chlorothalonil",
+        "fertilizer": "Phosphorus-rich",
+        "advice": "Remove infected residue (متاثرہ باقیات کو ہٹا دیں)"
+    },
+    "Mildew": {
+        "spray": "Sulfur fungicide",
+        "fertilizer": "Balanced nutrients",
+        "advice": "Improve air circulation (ہوا کے گزر کو بہتر بنائیں)"
+    },
+    "Mite": {
+        "spray": "Abamectin",
+        "fertilizer": "Potassium",
+        "advice": "Avoid water stress (پانی کی کمی سے بچائیں)"
+    },
+    "Septoria": {
+        "spray": "Azoxystrobin",
+        "fertilizer": "Nitrogen in moderation",
+        "advice": "Crop rotation (فصلوں کی تبدیلی کریں)"
+    },
+    "Smut": {
+        "spray": "Seed treatment fungicide",
+        "fertilizer": "Organic compost",
+        "advice": "Use certified seeds (تصدیق شدہ بیج استعمال کریں)"
+    },
+    "Stem Fly": {
+        "spray": "Lambda-cyhalothrin",
+        "fertilizer": "Nitrogen balanced",
+        "advice": "Early sowing (جلدی کاشت کریں)"
+    },
+    "Tan Spot": {
+        "spray": "Mancozeb",
+        "fertilizer": "Potassium-rich",
+        "advice": "Residue management (کھیت کی صفائی رکھیں)"
+    },
+    "Yellow Rust": {
+        "spray": "Propiconazole",
+        "fertilizer": "Balanced NPK",
+        "advice": "Resistant varieties (مزاحم اقسام لگائیں)"
+    },
+
+    # ---- Rice ----
+    "Bacterial Blight": {
+        "spray": "Streptocycline + Copper",
+        "fertilizer": "Potassium",
+        "advice": "Avoid standing water (کھیت میں پانی کھڑا نہ ہونے دیں)"
+    },
+    "Brown Spot": {
+        "spray": "Mancozeb",
+        "fertilizer": "Nitrogen balanced",
+        "advice": "Soil nutrient correction (مٹی کی غذائیت درست کریں)"
+    },
+    "Tungro": {
+        "spray": "Imidacloprid",
+        "fertilizer": "Balanced nutrients",
+        "advice": "Control leafhoppers (لیفسوپر کیڑے پر قابو رکھیں)"
+    },
+
+    # ---- Corn ----
+    "Common Rust": {
+        "spray": "Propiconazole",
+        "fertilizer": "Potassium-rich",
+        "advice": "Early fungicide spray (ابتدائی سپرے کریں)"
+    },
+    "Gray Leaf Spot": {
+        "spray": "Azoxystrobin",
+        "fertilizer": "Nitrogen balanced",
+        "advice": "Crop rotation (فصلوں کی تبدیلی کریں)"
+    },
+    "Blight": {
+        "spray": "Mancozeb",
+        "fertilizer": "Phosphorus-rich",
+        "advice": "Avoid overhead irrigation (اوپر سے پانی دینے سے گریز کریں)"
+    },
+
+    # ---- Healthy ----
+    "Healthy": {
+        "spray": "Not required",
+        "fertilizer": "As per soil test",
+        "advice": "Continue monitoring (فصل کی نگرانی جاری رکھیں)"
+    }
+}
+
 
 # ================= IMAGE PREPROCESS =================
 def preprocess_image(image_bytes):
     img = Image.open(io.BytesIO(image_bytes)).convert("RGB")
     img = img.resize((224, 224))
     img = np.array(img) / 255.0
-    img = np.expand_dims(img, axis=0)
-    return img
+    return np.expand_dims(img, axis=0)
 
-# ================= PREDICTION ROUTE =================
+# ================= PREDICT =================
 @app.route("/predict", methods=["POST"])
 def predict():
-    if "image" not in request.files:
-        return jsonify({"error": "No image uploaded"}), 400
+    img_tensor = preprocess_image(request.files["image"].read())
 
-    image_bytes = request.files["image"].read()
-    img_tensor = preprocess_image(image_bytes)
+    crop_probs = crop_model.predict(img_tensor)[0]
+    crop_idx = np.argmax(crop_probs)
+    crop = CROP_CLASSES[crop_idx]
 
-    # -------- Crop Prediction --------
-    crop_preds = crop_model.predict(img_tensor)
-    crop_index = int(np.argmax(crop_preds))
-    crop_conf = float(np.max(crop_preds))
-
-    crop_name = CROP_CLASSES[crop_index]
-
-    logging.info(f"CROP PREDICTION: {crop_name} | confidence={crop_conf:.3f}")
-
-    # -------- FALLBACK IF LOW CONFIDENCE --------
-    if crop_conf < 0.60:
-        return jsonify({
-            "crop": "Uncertain",
-            "crop_confidence": round(crop_conf * 100, 2),
-            "disease": "Please upload a clearer leaf image"
-        })
-
-    # -------- Disease Prediction --------
-    if crop_name == "Wheat":
-        preds = wheat_model.predict(img_tensor)
-        classes = WHEAT_DISEASE_CLASSES
-
-    elif crop_name == "Rice":
-        preds = rice_model.predict(img_tensor)
-        classes = RICE_DISEASE_CLASSES
-
-    else:  # Corn
-        preds = corn_model.predict(img_tensor)
-        classes = CORN_DISEASE_CLASSES
-
-    disease_index = int(np.argmax(preds))
-    disease_conf = float(np.max(preds))
-    disease_name = classes[disease_index]
-
-    logging.info(
-        f"DISEASE PREDICTION: {disease_name} | confidence={disease_conf:.3f}"
+    model, classes = (
+        (wheat_model, WHEAT_CLASSES) if crop == "Wheat" else
+        (rice_model, RICE_CLASSES) if crop == "Rice" else
+        (corn_model, CORN_CLASSES)
     )
 
+    probs = model.predict(img_tensor)[0]
+    top_idx = np.argsort(probs)[-3:][::-1]
+
+    top3 = [{
+        "disease": classes[i],
+        "confidence": round(float(probs[i]) * 100, 2)
+    } for i in top_idx]
+
+    best = top3[0]
+    disease = best["disease"] if best["confidence"] >= 60 else "Healthy"
+
     return jsonify({
-        "crop": crop_name,
-        "crop_confidence": round(crop_conf * 100, 2),
-        "disease": disease_name,
-        "disease_confidence": round(disease_conf * 100, 2)
+        "crop": crop,
+        "disease": disease,
+        "top3": top3,
+        "treatment": TREATMENT_DB.get(disease)
     })
 
-# ================= RUN =================
 if __name__ == "__main__":
     app.run(debug=True)
