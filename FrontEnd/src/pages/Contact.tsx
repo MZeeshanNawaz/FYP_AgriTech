@@ -1,9 +1,65 @@
-import React from "react";
+import React, { useState } from "react";
+import emailjs from "emailjs-com";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import CurvyEdge from "../components/CurvyEdge";
 
 const Contact = () => {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const sendEmail = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    try {
+      //  Send email to admin
+      await emailjs.send(
+        "service_7v50fgl",
+        "template_lev4qyu",
+        {
+          user_name: formData.name,
+          user_email: formData.email,
+          user_message: formData.message,
+          to_email: "ranazee909@gmail.com",
+        },
+        "TU_c-2q8LIKZmAHSk"
+      );
+
+      //  Auto-reply to user
+      await emailjs.send(
+        "service_7v50fgl",
+        "template_4gfcj56", 
+        {
+          name: formData.name,
+          to_email: formData.email,
+          message:
+            "Thank you for contacting AgriTech. Our team will respond shortly.",
+          from_name: "AgriTech Support",
+        },
+        "TU_c-2q8LIKZmAHSk"
+      );
+
+      toast.success("Message sent successfully!");
+      setFormData({ name: "", email: "", message: "" });
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to send message. Please try again.");
+    }
+  };
+
   return (
     <div className="contact-page">
+      <ToastContainer position="top-right" autoClose={3000} />
+
       {/* Hero Section */}
       <header className="hero hero-section position-relative">
         <div className="hero-overlay" />
@@ -11,7 +67,6 @@ const Contact = () => {
           <small className="text-uppercase breadcrumb">Home / Contact</small>
           <h1 className="display-5 fw-bold">Contact Us</h1>
         </div>
-
         <CurvyEdge color="rgba(255, 255, 255, 1)" />
       </header>
 
@@ -22,8 +77,8 @@ const Contact = () => {
             <div className="contact-card about p-4 rounded shadow-sm">
               <h5>About</h5>
               <p>
-                Have questions about your crops? Our experts and AI tools are here to help you
-                make smarter farming decisions.
+                Have questions about your crops? Our experts and AI tools are
+                here to help you make smarter farming decisions.
               </p>
             </div>
           </div>
@@ -49,7 +104,6 @@ const Contact = () => {
       {/* Map + Form */}
       <section className="container py-5">
         <div className="row g-4">
-          {/* Google Map */}
           <div className="col-lg-6">
             <iframe
               title="AgriTech Location"
@@ -57,27 +111,52 @@ const Contact = () => {
               width="100%"
               height="380"
               style={{ border: 0 }}
-              allowFullScreen
               loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
             />
           </div>
 
-          {/* Contact Form */}
           <div className="col-lg-6">
             <div className="contact-form-box p-4 h-100 rounded shadow-sm">
               <h6 className="text-success">Contact us</h6>
               <h3 className="fw-bold mb-4">Write a Message</h3>
-              <form>
+
+              <form onSubmit={sendEmail}>
                 <div className="mb-3">
-                  <input type="text" className="form-control" placeholder="Name" required />
+                  <input
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    type="text"
+                    className="form-control"
+                    placeholder="Name"
+                    required
+                  />
                 </div>
+
                 <div className="mb-3">
-                  <input type="email" className="form-control" placeholder="Email Address" required />
+                  <input
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    type="email"
+                    className="form-control"
+                    placeholder="Email Address"
+                    required
+                  />
                 </div>
+
                 <div className="mb-3">
-                  <textarea rows={4} className="form-control" placeholder="Write a Message" required />
+                  <textarea
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    rows={4}
+                    className="form-control"
+                    placeholder="Write a Message"
+                    required
+                  />
                 </div>
+
                 <button type="submit" className="btn btn-success px-4">
                   Send a Message
                 </button>

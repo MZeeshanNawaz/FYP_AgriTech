@@ -33,119 +33,201 @@ CORN_CLASSES = ["Common Rust", "Gray Leaf Spot", "Blight", "Healthy"]
 # ================= TREATMENT DATA =================
 TREATMENT_DB = {
 
-    # ---- Wheat ----
+    # ================= WHEAT =================
     "Aphid": {
-        "spray": "Imidacloprid / Neem Oil",
+        "spray": "Imidacloprid or Neem Oil",
         "fertilizer": "Potassium-rich fertilizer",
-        "advice": "Avoid excessive nitrogen (زیادہ نائٹروجن کے استعمال سے گریز کریں)"
+        "advice": (
+            "Inspect crop weekly, spray neem oil at early stage, and avoid excess nitrogen fertilizer. "
+            "(فصل کا ہفتہ وار معائنہ کریں، ابتدائی مرحلے پر نیم کا تیل سپرے کریں، "
+            "اور نائٹروجن کھاد زیادہ استعمال نہ کریں)"
+        )
     },
+
     "Black Rust": {
-        "spray": "Propiconazole / Tebuconazole",
+        "spray": "Propiconazole or Tebuconazole",
         "fertilizer": "Balanced NPK",
-        "advice": "Use resistant wheat varieties (زنگ سے محفوظ اقسام کاشت کریں)"
+        "advice": (
+            "Spray fungicide immediately after first symptoms and use rust-resistant wheat varieties next season. "
+            "(علامات ظاہر ہوتے ہی سپرے کریں اور آئندہ موسم میں زنگ سے محفوظ اقسام کاشت کریں)"
+        )
     },
+
     "Blast": {
         "spray": "Tricyclazole",
         "fertilizer": "Silicon-based fertilizer",
-        "advice": "Avoid excess nitrogen (نائٹروجن کی زیادتی سے بچیں)"
+        "advice": (
+            "Avoid over-irrigation, apply silicon fertilizer, and keep field dry during early growth. "
+            "(زیادہ پانی نہ دیں، سلیکان کھاد استعمال کریں، اور ابتدائی نشوونما میں کھیت خشک رکھیں)"
+        )
     },
+
     "Brown Rust": {
         "spray": "Mancozeb",
         "fertilizer": "Balanced NPK",
-        "advice": "Early fungicide application (ابتدائی مرحلے پر سپرے کریں)"
+        "advice": (
+            "Apply fungicide early, monitor leaf color, and avoid late nitrogen application. "
+            "(ابتدائی مرحلے پر سپرے کریں، پتوں کی حالت دیکھتے رہیں، اور آخری وقت نائٹروجن نہ دیں)"
+        )
     },
+
     "Common Root Rot": {
         "spray": "Carbendazim",
         "fertilizer": "Organic compost",
-        "advice": "Improve drainage (پانی کے نکاس کو بہتر بنائیں)"
+        "advice": (
+            "Improve drainage, avoid waterlogging, and use organic compost for stronger roots. "
+            "(پانی کے نکاس کو بہتر کریں، کھیت میں پانی کھڑا نہ ہونے دیں، اور نامیاتی کھاد استعمال کریں)"
+        )
     },
+
     "Fusarium Head Blight": {
         "spray": "Tebuconazole",
         "fertilizer": "Potassium fertilizer",
-        "advice": "Avoid late irrigation (آخری مرحلے پر پانی نہ لگائیں)"
+        "advice": (
+            "Avoid irrigation during flowering stage and spray fungicide before grain formation. "
+            "(پھول آنے کے دوران پانی نہ دیں اور دانہ بننے سے پہلے سپرے کریں)"
+        )
     },
+
     "Leaf Blight": {
         "spray": "Chlorothalonil",
-        "fertilizer": "Phosphorus-rich",
-        "advice": "Remove infected residue (متاثرہ باقیات کو ہٹا دیں)"
+        "fertilizer": "Phosphorus-rich fertilizer",
+        "advice": (
+            "Remove infected plant debris and spray fungicide at 7–10 day interval. "
+            "(متاثرہ پودوں کی باقیات ہٹا دیں اور 7 سے 10 دن کے وقفے سے سپرے کریں)"
+        )
     },
+
     "Mildew": {
         "spray": "Sulfur fungicide",
         "fertilizer": "Balanced nutrients",
-        "advice": "Improve air circulation (ہوا کے گزر کو بہتر بنائیں)"
+        "advice": (
+            "Ensure proper spacing between plants and improve air circulation in the field. "
+            "(پودوں کے درمیان مناسب فاصلہ رکھیں اور ہوا کی آمدورفت بہتر بنائیں)"
+        )
     },
+
     "Mite": {
         "spray": "Abamectin",
-        "fertilizer": "Potassium",
-        "advice": "Avoid water stress (پانی کی کمی سے بچائیں)"
+        "fertilizer": "Potassium fertilizer",
+        "advice": (
+            "Avoid drought stress, maintain soil moisture, and spray acaricide when infestation starts. "
+            "(پانی کی کمی سے بچائیں، نمی برقرار رکھیں، اور حملہ شروع ہوتے ہی سپرے کریں)"
+        )
     },
+
     "Septoria": {
         "spray": "Azoxystrobin",
-        "fertilizer": "Nitrogen in moderation",
-        "advice": "Crop rotation (فصلوں کی تبدیلی کریں)"
+        "fertilizer": "Moderate nitrogen",
+        "advice": (
+            "Rotate crops every season and avoid dense planting to reduce humidity. "
+            "(ہر موسم میں فصل تبدیل کریں اور گھنی کاشت سے پرہیز کریں)"
+        )
     },
+
     "Smut": {
         "spray": "Seed treatment fungicide",
         "fertilizer": "Organic compost",
-        "advice": "Use certified seeds (تصدیق شدہ بیج استعمال کریں)"
+        "advice": (
+            "Always treat seeds before sowing and never use infected seeds. "
+            "(بیج بونے سے پہلے ٹریٹمنٹ کریں اور متاثرہ بیج استعمال نہ کریں)"
+        )
     },
+
     "Stem Fly": {
         "spray": "Lambda-cyhalothrin",
-        "fertilizer": "Nitrogen balanced",
-        "advice": "Early sowing (جلدی کاشت کریں)"
+        "fertilizer": "Balanced nitrogen",
+        "advice": (
+            "Sow crop early and remove infected plants immediately from field. "
+            "(فصل جلدی کاشت کریں اور متاثرہ پودے فوراً کھیت سے نکال دیں)"
+        )
     },
+
     "Tan Spot": {
         "spray": "Mancozeb",
-        "fertilizer": "Potassium-rich",
-        "advice": "Residue management (کھیت کی صفائی رکھیں)"
+        "fertilizer": "Potassium-rich fertilizer",
+        "advice": (
+            "Plow crop residues deeply and avoid continuous wheat cultivation. "
+            "(فصل کی باقیات کو گہرا ہل چلائیں اور مسلسل گندم کاشت نہ کریں)"
+        )
     },
+
     "Yellow Rust": {
         "spray": "Propiconazole",
         "fertilizer": "Balanced NPK",
-        "advice": "Resistant varieties (مزاحم اقسام لگائیں)"
+        "advice": (
+            "Spray at early yellow patches and prefer resistant varieties in next crop. "
+            "(پیلاہٹ ظاہر ہوتے ہی سپرے کریں اور آئندہ مزاحم اقسام لگائیں)"
+        )
     },
 
-    # ---- Rice ----
+    # ================= RICE =================
     "Bacterial Blight": {
         "spray": "Streptocycline + Copper",
-        "fertilizer": "Potassium",
-        "advice": "Avoid standing water (کھیت میں پانی کھڑا نہ ہونے دیں)"
+        "fertilizer": "Potassium fertilizer",
+        "advice": (
+            "Avoid stagnant water, reduce nitrogen, and spray antibiotics early. "
+            "(کھیت میں پانی کھڑا نہ ہونے دیں، نائٹروجن کم کریں، اور بروقت سپرے کریں)"
+        )
     },
+
     "Brown Spot": {
         "spray": "Mancozeb",
-        "fertilizer": "Nitrogen balanced",
-        "advice": "Soil nutrient correction (مٹی کی غذائیت درست کریں)"
+        "fertilizer": "Balanced nitrogen",
+        "advice": (
+            "Correct soil nutrient deficiency and maintain proper plant nutrition. "
+            "(مٹی کی غذائی کمی دور کریں اور مناسب خوراک فراہم کریں)"
+        )
     },
+
     "Tungro": {
         "spray": "Imidacloprid",
         "fertilizer": "Balanced nutrients",
-        "advice": "Control leafhoppers (لیفسوپر کیڑے پر قابو رکھیں)"
+        "advice": (
+            "Control leafhopper insects and remove infected plants immediately. "
+            "(لیفسوپر کیڑوں پر قابو رکھیں اور متاثرہ پودے فوراً نکال دیں)"
+        )
     },
 
-    # ---- Corn ----
+    # ================= CORN =================
     "Common Rust": {
         "spray": "Propiconazole",
-        "fertilizer": "Potassium-rich",
-        "advice": "Early fungicide spray (ابتدائی سپرے کریں)"
-    },
-    "Gray Leaf Spot": {
-        "spray": "Azoxystrobin",
-        "fertilizer": "Nitrogen balanced",
-        "advice": "Crop rotation (فصلوں کی تبدیلی کریں)"
-    },
-    "Blight": {
-        "spray": "Mancozeb",
-        "fertilizer": "Phosphorus-rich",
-        "advice": "Avoid overhead irrigation (اوپر سے پانی دینے سے گریز کریں)"
+        "fertilizer": "Potassium-rich fertilizer",
+        "advice": (
+            "Spray fungicide early and avoid dense planting. "
+            "(ابتدائی مرحلے پر سپرے کریں اور گھنی کاشت سے بچیں)"
+        )
     },
 
-    # ---- Healthy ----
+    "Gray Leaf Spot": {
+        "spray": "Azoxystrobin",
+        "fertilizer": "Balanced nitrogen",
+        "advice": (
+            "Rotate crops and plow infected residues after harvest. "
+            "(فصل تبدیل کریں اور کٹائی کے بعد باقیات کو ہل چلائیں)"
+        )
+    },
+
+    "Blight": {
+        "spray": "Mancozeb",
+        "fertilizer": "Phosphorus-rich fertilizer",
+        "advice": (
+            "Avoid overhead irrigation and spray fungicide at early stage. "
+            "(اوپر سے پانی نہ دیں اور ابتدائی مرحلے پر سپرے کریں)"
+        )
+    },
+
+    # ================= HEALTHY =================
     "Healthy": {
         "spray": "Not required",
         "fertilizer": "As per soil test",
-        "advice": "Continue monitoring (فصل کی نگرانی جاری رکھیں)"
+        "advice": (
+            "Continue regular monitoring, balanced fertilization, and timely irrigation. "
+            "(باقاعدہ نگرانی جاری رکھیں، متوازن کھاد دیں، اور وقت پر پانی لگائیں)"
+        )
     }
 }
+
 
 
 # ================= IMAGE PREPROCESS =================
