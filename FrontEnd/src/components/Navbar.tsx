@@ -57,6 +57,11 @@ const Navbar: React.FC<NavbarProps> = ({ search, setSearch }) => {
                 Weather
               </Link>
             </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/chatbot">
+                ChatBot
+              </Link>
+            </li>
           </ul>
 
           {/* Login/Register */}

@@ -17,6 +17,7 @@ import Contact from "./pages/Contact";
 import Services from "./pages/services";
 import Blog from './pages/Blog';
 import Weather from './pages/WeatherForecasting';
+import ChatBot from "./pages/AgriChatbot"
 // static fallback products
 import localProducts from "./data/products";
 
@@ -159,6 +160,7 @@ function AppContent() {
         <Route path="/detect" element={<DiseaseDetection />} /> 
         <Route path="/blog" element={<Blog />} />
         <Route path="/weather" element={<Weather />} />
+        <Route path="/chatbot" element={<ChatBot />} />
       </Routes>
 
       {!hideLayout && (
