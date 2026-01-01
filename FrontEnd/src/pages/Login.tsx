@@ -1,21 +1,43 @@
 import React, { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import axios from "axios";
 
-const Login = () => {
+const Login: React.FC = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
-  const location = useLocation();
+  const [loading, setLoading] = useState<boolean>(false);
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
 
-  // handle form submit
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("Login form submitted");
-    // You can add login API call here
+    setLoading(true);
+
+    try {
+      const res = await axios.post("http://localhost:5000/api/auth/login", {
+        email,
+        password,
+      });
+
+      localStorage.setItem("token", res.data.token);
+
+      alert("Login Successful");
+
+      navigate("/"); // redirect after login
+    } catch (err: any) {
+      alert(err.response?.data?.message || "Login failed");
+    }
+
+    setLoading(false);
   };
 
   return (
     <div className="login-wrapper d-flex align-items-center justify-content-center min-vh-100">
       <div className="login-card d-flex rounded shadow overflow-hidden">
+
         {/* Left image */}
         <div className="login-image d-none d-md-block">
           <img
@@ -32,21 +54,14 @@ const Login = () => {
 
           {/* Tabs */}
           <div className="form-tabs mb-4 d-flex gap-4">
-            <Link
-              to="/login"
-              className={location.pathname === "/login" ? "active" : ""}
-            >
+            <Link to="/login" className={location.pathname === "/login" ? "active" : ""}>
               Login
             </Link>
-            <Link
-              to="/register"
-              className={location.pathname === "/register" ? "active" : ""}
-            >
+            <Link to="/register" className={location.pathname === "/register" ? "active" : ""}>
               Register
             </Link>
           </div>
 
-          {/* Form */}
           <form onSubmit={handleSubmit}>
             <div className="mb-3 position-relative">
               <input
@@ -54,15 +69,21 @@ const Login = () => {
                 placeholder="Enter your email"
                 className="form-control"
                 required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
+
             <div className="mb-3 position-relative">
               <input
                 type={showPassword ? "text" : "password"}
                 placeholder="Enter Password"
                 className="form-control"
                 required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
+
               <span
                 className="toggle-password"
                 onClick={() => setShowPassword(!showPassword)}
@@ -78,8 +99,8 @@ const Login = () => {
               </a>
             </div>
 
-            <button type="submit" className="btn btn-login w-100">
-              Login
+            <button type="submit" className="btn btn-login w-100" disabled={loading}>
+              {loading ? "Processing..." : "Login"}
             </button>
           </form>
         </div>

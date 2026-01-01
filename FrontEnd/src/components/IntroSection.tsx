@@ -17,7 +17,7 @@ const IntroSection = () => {
             <h2 className="fw-bold mb-3">AI-Empowered Agri-Tech Platform for Farmers</h2>
             <h6 className="text-success mb-3">Why AgriTech?</h6>
             <p className="mb-4">
-              AgriTech is designed for the unique needs of Pakistani maize farmers. Our AI-driven platform combines disease detection, expert advice, and smart tools to help you grow better, earn more, and waste less.
+              AgriTech is designed for the unique needs of Pakistani farmers. Our AI-driven platform combines disease detection, expert advice, and smart tools to help you grow better, earn more, and waste less.
             </p>
             <div className="d-flex gap-4 mb-4">
               <div><i className="fa-solid fa-leaf text-success me-2"></i>Growing Crops</div>

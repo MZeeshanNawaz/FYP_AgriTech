@@ -27,39 +27,56 @@ const Navbar: React.FC<NavbarProps> = ({ search, setSearch }) => {
                 About
               </Link>
             </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/services">
+
+            {/* Services Dropdown */}
+            <li className="nav-item dropdown">
+              <Link
+                className="nav-link dropdown-toggle"
+                to="#"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
                 Services
               </Link>
+              <ul className="dropdown-menu shadow-sm border-0 rounded-3">
+                <li>
+                  <Link className="dropdown-item" to="/services">
+                    Our Services 
+                  </Link>
+                </li>
+                <li>
+                  <Link className="dropdown-item" to="/marketplace">
+                    MarketPlace
+                  </Link>
+                </li>
+                <li>
+                  <Link className="dropdown-item" to="/detect">
+                    Disease Detection
+                  </Link>
+                </li>
+                <li>
+                  <Link className="dropdown-item" to="/chatbot">
+                    ChatBot
+                  </Link>
+                </li>
+                <li>
+                  <Link className="dropdown-item" to="/weather">
+                    Weather
+                  </Link>
+                </li>
+              </ul>
             </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/marketplace">
-                MarketPlace
-              </Link>
-            </li>
+
             <li className="nav-item">
               <Link className="nav-link" to="/blog">
                 Blog
               </Link>
             </li>
+
             <li className="nav-item">
               <Link className="nav-link" to="/contact">
                 Contact
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/detect">
-                DiseaseDetection
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/weather">
-                Weather
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/chatbot">
-                ChatBot
               </Link>
             </li>
           </ul>

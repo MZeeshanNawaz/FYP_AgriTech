@@ -2,13 +2,16 @@ import express, { Application, Request, Response } from "express";
 import cors from "cors";
 import config from "./config";
 import { connectDB } from "./databases/mongo";
+
 import marketplaceRoutes from "./routes/marketplaceRoutes";
+import authRoutes from "./routes/auth.routes"; 
+
 import errorHandler from "./middlewares/errorHandler";
 import notFoundHandler from "./middlewares/notFound";
 
 const app: Application = express();
 
-// CORS: allow the frontend dev origins
+// ================= CORS =================
 app.use(
   cors({
     origin: config.ALLOWED_ORIGINS,
@@ -20,24 +23,27 @@ app.use(
 
 app.use(express.json());
 
+// ================= HEALTH CHECK =================
 app.get("/", (_req: Request, res: Response) => {
   res.send("API is running...");
 });
 
-// api
-app.use("/api/products", marketplaceRoutes);
+// ================= ROUTES =================
+app.use("/api/auth", authRoutes);          
+app.use("/api/products", marketplaceRoutes); 
 
-// 404
+// ================= 404 =================
 app.use(notFoundHandler);
 
-// central error handler
+// ================= ERROR HANDLER =================
 app.use(errorHandler);
 
-// start
+// ================= START SERVER =================
 async function start() {
   try {
     await connectDB(config.MONGO_URI);
     console.log("MongoDB connected");
+
     app.listen(config.PORT, () => {
       console.log(`Server running on http://localhost:${config.PORT}`);
     });
