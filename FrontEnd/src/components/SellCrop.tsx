@@ -16,33 +16,37 @@ export default function SellCrop({ onCreated, showToast }: SellCropProps) {
   const [cropType, setCropType] = useState<string>("Corn");
 
   const previewImage = useMemo(() => {
-    const key = String(cropType || "").toLowerCase();
+    const key = cropType.toLowerCase();
     return IMAGE_MAP[key] || "https://via.placeholder.com/600x360?text=Preview";
   }, [cropType]);
 
   function parsePriceToNumber(input: string): number {
-    //Parse numeric value from strings like "PKR 3,200" -> 3200
-    const cleaned = String(input).replace(/[^\d.]/g, "");
+    const cleaned = input.replace(/[^\d.]/g, "");
     const n = Number(cleaned);
     return Number.isFinite(n) ? n : 0;
   }
 
-  async function handleSubmit(e: React.FormEvent) {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!title || !price || !author || !contactNumber || !cropType) {
-      showToast?.({id: Date.now(), title: "Error", message: "Please fill all fields.", type: "danger" });
+      showToast?.({
+        id: Date.now().toString(),
+        title: "Error",
+        message: "Please fill all fields.",
+        type: "danger",
+      });
       return;
     }
 
     const priceNumber = parsePriceToNumber(price);
-    const payload = {
+    const payload: Product = {
       title,
-      price: priceNumber,
-      image: previewImage,          
+      price: priceNumber.toString(),
+      image: previewImage,
       author,
       contactNumber,
-      cropType,                    
+      cropType,
     };
 
     try {
@@ -52,14 +56,21 @@ export default function SellCrop({ onCreated, showToast }: SellCropProps) {
 
       onCreated?.(res.data);
 
-      // reset form
+      showToast?.({
+        id: Date.now().toString(),
+        title: "Success",
+        message: `${res.data.title} has been listed successfully.`,
+        type: "success",
+      });
+
+      // Reset form
       setTitle("");
       setPrice("");
       setAuthor("");
       setContactNumber("");
       setCropType("Corn");
 
-      // close bootstrap modal if present
+      // Close bootstrap modal
       const modalEl = document.getElementById("sellCropModal");
       if (modalEl && (window as any).bootstrap) {
         const bs = (window as any).bootstrap;
@@ -67,10 +78,15 @@ export default function SellCrop({ onCreated, showToast }: SellCropProps) {
         modal.hide();
       }
     } catch (err) {
-      console.error("Create product failed:", err);
-      showToast?.({id: Date.now(),title: "Error", message: "Failed to list item.", type: "danger" });
+      console.error(err);
+      showToast?.({
+        id: Date.now().toString(),
+        title: "Error",
+        message: "Failed to list the item.",
+        type: "danger",
+      });
     }
-  }
+  };
 
   return (
     <>
@@ -143,7 +159,11 @@ export default function SellCrop({ onCreated, showToast }: SellCropProps) {
                   <div className="col-12">
                     <label className="form-label">Image (auto-chosen)</label>
                     <div className="d-flex align-items-center gap-3">
-                      <img src={previewImage} alt="preview" style={{ width: 120, height: 70, objectFit: "cover", borderRadius: 6 }} />
+                      <img
+                        src={previewImage}
+                        alt="preview"
+                        style={{ width: 120, height: 70, objectFit: "cover", borderRadius: 6 }}
+                      />
                       <small className="text-muted">Image is selected from the Crop Type.</small>
                     </div>
                   </div>

@@ -1,40 +1,25 @@
 import React from "react";
-import ProductCard from "./ProductCard";
 import type { ProductGridProps } from "../types";
+import ProductCard from "./ProductCard";
 
-export default function ProductGrid({ products = [], onDelete, search = "" }: ProductGridProps) {
-  const q = search?.trim().toLowerCase() ?? "";
-
-  const list = React.useMemo(() => {
-    if (!Array.isArray(products)) return [];
-    if (!q) return products;
-    return products.filter((p) => {
-      const haystack = [
-        p.title,
-        p.cropType,
-        p.author,
-        p.price?.toString(),
-        p.contactNumber,
-        (p as any).contact,
-      ]
-        .filter(Boolean)
-        .join(" ")
-        .toLowerCase();
-      return haystack.includes(q);
-    });
-  }, [products, q]);
-
-  if (!list.length) {
-    return <div className="text-center py-5">No products found</div>;
-  }
+const ProductGrid: React.FC<ProductGridProps> = ({ products = [], onDelete, search = "" }) => {
+  const filteredProducts = products.filter((p) =>
+    p.title.toLowerCase().includes(search.toLowerCase())
+  );
 
   return (
-    <div className="row g-4">
-      {list.map((p) => (
-        <div className="col-12 col-md-6 col-lg-4" key={p._id || p.id}>
-          <ProductCard product={p} onDelete={onDelete} />
-        </div>
-      ))}
+    <div className="row g-3">
+      {filteredProducts.length > 0 ? (
+        filteredProducts.map((prod) => (
+          <div key={prod._id ?? prod.id?.toString()} className="col-12 col-md-4">
+            <ProductCard product={prod} onDelete={onDelete} />
+          </div>
+        ))
+      ) : (
+        <p className="text-center mt-4 text-muted">No products found.</p>
+      )}
     </div>
   );
-}
+};
+
+export default ProductGrid;

@@ -90,13 +90,6 @@ ${input}
           New Chat
         </button>
 
-        <input
-          className="search"
-          placeholder="Search Recent Chats"
-          value={search}
-          onChange={e => setSearch(e.target.value)}
-        />
-
         <button className="delete" onClick={deleteChat}>
           Delete this chat
         </button>

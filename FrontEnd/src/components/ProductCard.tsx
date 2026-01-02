@@ -1,7 +1,8 @@
 import React from "react";
+import axios from "axios";
 import { ProductCardProps } from "../types/index";
 
-export default function ProductCard({ product, onDelete }: ProductCardProps) {
+export default function ProductCard({ product, onDelete, showToast }: ProductCardProps & { showToast?: any }) {
   const { title, image, price, contactNumber, author, _id } = product;
   const isDbItem = !!_id && !String(_id).startsWith("local-");
 
@@ -9,11 +10,40 @@ export default function ProductCard({ product, onDelete }: ProductCardProps) {
 
   let displayPrice: string;
   if (typeof price === "number") {
-  displayPrice = `PKR ${(price as number).toLocaleString()}`;
-} else {
-  displayPrice = price ?? "";
-}
+    displayPrice = `PKR ${(price as number).toLocaleString()}`;
+  } else {
+    displayPrice = price ?? "";
+  }
 
+  const handleDelete = async () => {
+    if (!_id) return;
+
+    if (!confirm("Delete this item?")) return;
+
+    try {
+      // Call backend API to delete product
+      await axios.delete(`http://localhost:5000/api/products/${_id}`);
+
+      // Update parent state
+      onDelete?.(_id);
+
+      // Show success toast
+      showToast?.({
+        id: Date.now(),
+        title: "Deleted",
+        message: `${title} has been deleted successfully.`,
+        type: "success",
+      });
+    } catch (err) {
+      console.error("Failed to delete product:", err);
+      showToast?.({
+        id: Date.now(),
+        title: "Error",
+        message: `Failed to delete ${title}.`,
+        type: "danger",
+      });
+    }
+  };
 
   return (
     <div className="card crop-card shadow-sm">
@@ -22,13 +52,7 @@ export default function ProductCard({ product, onDelete }: ProductCardProps) {
         <span className="price-pill">{displayPrice}</span>
 
         {isDbItem && (
-          <button
-            title="Delete"
-            className="card-admin-btn"
-            onClick={() => {
-              if (confirm("Delete this item?")) onDelete?.(_id!);
-            }}
-          >
+          <button title="Delete" className="card-admin-btn" onClick={handleDelete}>
             <i className="fa-solid fa-trash"></i>
           </button>
         )}
