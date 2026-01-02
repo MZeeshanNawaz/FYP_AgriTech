@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { FooterProps } from "../types";
 
 const Footer: React.FC<FooterProps> = ({ subscribeEmail, setSubscribeEmail, handleSubscribe }) => {
@@ -21,11 +22,15 @@ const Footer: React.FC<FooterProps> = ({ subscribeEmail, setSubscribeEmail, hand
             <div className="col-lg-2">
               <h6 className="footer-heading">Explore</h6>
               <ul className="list-unstyled footer-links small">
-                <li><a href="#"><i className="fa-solid fa-chevron-right me-2 fa-xs"></i>About</a></li>
-                <li><a href="#"><i className="fa-solid fa-chevron-right me-2 fa-xs"></i>Services</a></li>
-                <li><a href="#"><i className="fa-solid fa-chevron-right me-2 fa-xs"></i>Marketplace</a></li>
-                <li><a href="#"><i className="fa-solid fa-chevron-right me-2 fa-xs"></i>Blog</a></li>
-                <li><a href="#"><i className="fa-solid fa-chevron-right me-2 fa-xs"></i>Contact</a></li>
+                <li><Link to="/"><i className="fa-solid fa-chevron-right me-2 fa-xs"></i>Home</Link></li>
+                <li><Link to="/about"><i className="fa-solid fa-chevron-right me-2 fa-xs"></i>About</Link></li>
+                <li><Link to="/services"><i className="fa-solid fa-chevron-right me-2 fa-xs"></i>Services</Link></li>
+                <li><Link to="/marketplace"><i className="fa-solid fa-chevron-right me-2 fa-xs"></i>Marketplace</Link></li>
+                <li><Link to="/blog"><i className="fa-solid fa-chevron-right me-2 fa-xs"></i>Blog</Link></li>
+                <li><Link to="/contact"><i className="fa-solid fa-chevron-right me-2 fa-xs"></i>Contact</Link></li>
+                <li><Link to="/detect"><i className="fa-solid fa-chevron-right me-2 fa-xs"></i>DiseaseDetection</Link></li>
+                <li><Link to="/weather"><i className="fa-solid fa-chevron-right me-2 fa-xs"></i>Weather</Link></li>
+                <li><Link to="/chatbot"><i className="fa-solid fa-chevron-right me-2 fa-xs"></i>ChatBot</Link></li>
               </ul>
             </div>
 
