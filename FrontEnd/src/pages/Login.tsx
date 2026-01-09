@@ -3,7 +3,15 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import axios from "axios";
 
-const Login: React.FC = () => {
+interface LoginProps {
+  showToast: (args: {
+    title: string;
+    message: string;
+    type?: "success" | "danger" | "info" | "warning";
+  }) => void;
+}
+
+const Login: React.FC<LoginProps> = ({ showToast }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
@@ -24,11 +32,19 @@ const Login: React.FC = () => {
 
       localStorage.setItem("token", res.data.token);
 
-      alert("Login Successful");
+      showToast({
+        title: "Login Successful",
+        message: "Welcome back! You are now logged in.",
+        type: "success",
+      });
 
-      navigate("/", { replace: true }); 
+      navigate("/", { replace: true });
     } catch (err: any) {
-      alert(err.response?.data?.message || "Login failed");
+      showToast({
+        title: "Login Failed",
+        message: err.response?.data?.message || "Invalid email or password",
+        type: "danger",
+      });
     } finally {
       setLoading(false);
     }

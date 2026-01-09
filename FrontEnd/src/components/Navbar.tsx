@@ -2,11 +2,18 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { NavbarProps } from "../types";
 
-const Navbar: React.FC<NavbarProps> = ({ search, setSearch }) => {
+const Navbar: React.FC<NavbarProps> = ({ search, setSearch, showToast }) => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
     localStorage.removeItem("token");
+
+    showToast({
+      title: "Logged Out",
+      message: "You have been logged out successfully.",
+      type: "success",
+    });
+
     navigate("/login");
   };
 

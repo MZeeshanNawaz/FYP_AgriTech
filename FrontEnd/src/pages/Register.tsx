@@ -3,7 +3,15 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import axios from "axios";
 
-const Register: React.FC = () => {
+interface RegisterProps {
+  showToast: (args: {
+    title: string;
+    message: string;
+    type?: "success" | "danger" | "info" | "warning";
+  }) => void;
+}
+
+const Register: React.FC<RegisterProps> = ({ showToast }) => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -20,7 +28,11 @@ const Register: React.FC = () => {
     e.preventDefault();
 
     if (password !== confirm) {
-      alert("Passwords do not match");
+      showToast({
+        title: "Password Mismatch",
+        message: "Passwords do not match.",
+        type: "warning",
+      });
       return;
     }
 
@@ -34,21 +46,28 @@ const Register: React.FC = () => {
         phone,
       });
 
-      alert("Registration Successful");
+      showToast({
+        title: "Registration Successful",
+        message: "Your account has been created. Please log in.",
+        type: "success",
+      });
+
       navigate("/login");
-
     } catch (err: any) {
-      alert(err.response?.data?.message || "Registration failed");
+      showToast({
+        title: "Registration Failed",
+        message: err.response?.data?.message || "Unable to register user",
+        type: "danger",
+      });
+    } finally {
+      setLoading(false);
     }
-
-    setLoading(false);
   };
 
   return (
     <div className="login-wrapper d-flex align-items-center justify-content-center min-vh-100">
       <div className="login-card d-flex rounded shadow overflow-hidden">
 
-        {/* Left image */}
         <div className="login-image d-none d-md-block">
           <img
             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTshHMu6YHykL6VXh6Ka4lfLN0xQAgqXi02OA&s"
@@ -56,13 +75,11 @@ const Register: React.FC = () => {
           />
         </div>
 
-        {/* Right form */}
         <div className="login-form p-5">
           <h2 className="welcome-text">
             Register<span> now!</span>
           </h2>
 
-          {/* Tabs */}
           <div className="form-tabs mb-4 d-flex gap-4">
             <Link to="/login" className={location.pathname === "/login" ? "active" : ""}>
               Login
@@ -104,7 +121,6 @@ const Register: React.FC = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
-
               <span className="toggle-password" onClick={() => setShowPassword(!showPassword)}>
                 {showPassword ? <FaEyeSlash /> : <FaEye />}
               </span>
@@ -119,7 +135,6 @@ const Register: React.FC = () => {
                 value={confirm}
                 onChange={(e) => setConfirm(e.target.value)}
               />
-
               <span className="toggle-password" onClick={() => setShowPassword(!showPassword)}>
                 {showPassword ? <FaEyeSlash /> : <FaEye />}
               </span>

@@ -62,7 +62,12 @@ function AppContent() {
         <>
           <TopStripe />
           <ContactStrip />
-          <Navbar search={search} setSearch={setSearch} />
+          <Navbar
+            search={search}
+            setSearch={setSearch}
+            showToast={addToast}
+          />
+
         </>
       )}
 
@@ -73,8 +78,8 @@ function AppContent() {
 
       <Routes>
         {/* PUBLIC */}
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login showToast={addToast} />} />
+        <Route path="/register" element={<Register showToast={addToast} />} />
 
         {/* PROTECTED */}
         <Route element={<ProtectedRoute />}>
@@ -86,8 +91,8 @@ function AppContent() {
               <Marketplace
                 products={products}
                 search={search}
-                onDelete={() => {}}
-                onCreated={() => {}}
+                onDelete={() => { }}
+                onCreated={() => { }}
                 showToast={addToast}
               />
             }
@@ -108,7 +113,7 @@ function AppContent() {
         <Footer
           subscribeEmail={subscribeEmail}
           setSubscribeEmail={setSubscribeEmail}
-          handleSubscribe={() => {}}
+          handleSubscribe={() => { }}
         />
       )}
     </>

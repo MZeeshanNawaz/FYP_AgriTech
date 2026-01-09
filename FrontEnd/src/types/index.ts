@@ -3,7 +3,13 @@ import { ReactNode } from "react";
 export interface NavbarProps {
   search: string;
   setSearch: React.Dispatch<React.SetStateAction<string>>;
+  showToast: (args: {
+    title: string;
+    message: string;
+    type?: "success" | "danger" | "info" | "warning";
+  }) => void;
 }
+
 
 export interface Toast {
   id: string | number;
