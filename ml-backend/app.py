@@ -5,20 +5,51 @@ import numpy as np
 from PIL import Image
 import io
 import logging
+import os
+
+from tensorflow.keras.applications.efficientnet import preprocess_input as effnet_preprocess
 
 app = Flask(__name__)
 CORS(app)
-
 logging.basicConfig(level=logging.INFO)
 
+# ================= CONFIG =================
+IMG_SIZE = 224
+STAGE1_THRESHOLD = 0.60
+STAGE2_THRESHOLD = 0.50
+DISEASE_THRESHOLD = 0.60
+
 # ================= LOAD MODELS =================
-crop_model = tf.keras.models.load_model("models/crop_identifier.h5", compile=False)
-wheat_model = tf.keras.models.load_model("models/wheat_disease_model.h5", compile=False)
-rice_model  = tf.keras.models.load_model("models/rice_disease_model.h5", compile=False)
-corn_model  = tf.keras.models.load_model("models/corn_disease_model.h5", compile=False)
+MODEL_DIR = "models"
+
+stage1_model = tf.keras.models.load_model(
+    os.path.join(MODEL_DIR, "stage1_crop_vs_noncrop.h5"),
+    compile=False
+)
+
+stage2_model = tf.keras.models.load_model(
+    os.path.join(MODEL_DIR, "stage2_crop_type.h5"),
+    compile=False
+)
+
+wheat_model = tf.keras.models.load_model(
+    os.path.join(MODEL_DIR, "wheat_disease_model.h5"),
+    compile=False
+)
+
+rice_model = tf.keras.models.load_model(
+    os.path.join(MODEL_DIR, "rice_disease_model.h5"),
+    compile=False
+)
+
+corn_model = tf.keras.models.load_model(
+    os.path.join(MODEL_DIR, "corn_disease_model.h5"),
+    compile=False
+)
 
 # ================= CLASSES =================
-CROP_CLASSES = ["Wheat", "Rice", "Corn"]
+STAGE1_CLASSES = ["Crop", "NonCrop"]
+STAGE2_CLASSES = ["Corn", "Rice", "Wheat"]
 
 WHEAT_CLASSES = [
     "Aphid","Black Rust","Blast","Brown Rust","Common Root Rot",
@@ -27,7 +58,6 @@ WHEAT_CLASSES = [
 ]
 
 RICE_CLASSES = ["Bacterial Blight", "Blast", "Brown Spot", "Tungro"]
-
 CORN_CLASSES = ["Common Rust", "Gray Leaf Spot", "Blight", "Healthy"]
 
 # ================= TREATMENT DATA =================
@@ -228,47 +258,107 @@ TREATMENT_DB = {
     }
 }
 
-
-
 # ================= IMAGE PREPROCESS =================
-def preprocess_image(image_bytes):
+def load_image(image_bytes):
     img = Image.open(io.BytesIO(image_bytes)).convert("RGB")
-    img = img.resize((224, 224))
-    img = np.array(img) / 255.0
+    img = img.resize((IMG_SIZE, IMG_SIZE))
+    return np.array(img)
+
+def preprocess_effnet(img_array):
+    """For Stage 1 & Stage 2 (EfficientNetB3)"""
+    img = effnet_preprocess(img_array.astype(np.float32))
+    return np.expand_dims(img, axis=0)
+
+def preprocess_mobilenet(img_array):
+    """For Disease models (MobileNetV2)"""
+    img = img_array.astype(np.float32) / 255.0
     return np.expand_dims(img, axis=0)
 
 # ================= PREDICT =================
 @app.route("/predict", methods=["POST"])
 def predict():
-    img_tensor = preprocess_image(request.files["image"].read())
 
-    crop_probs = crop_model.predict(img_tensor)[0]
-    crop_idx = np.argmax(crop_probs)
-    crop = CROP_CLASSES[crop_idx]
+    if "image" not in request.files:
+        return jsonify({"error": "No image uploaded"}), 400
 
-    model, classes = (
-        (wheat_model, WHEAT_CLASSES) if crop == "Wheat" else
-        (rice_model, RICE_CLASSES) if crop == "Rice" else
-        (corn_model, CORN_CLASSES)
-    )
+    image_bytes = request.files["image"].read()
+    img_array = load_image(image_bytes)
 
-    probs = model.predict(img_tensor)[0]
-    top_idx = np.argsort(probs)[-3:][::-1]
+    # ---------- STAGE 1: Crop vs NonCrop ----------
+    stage1_input = preprocess_effnet(img_array)
+    stage1_probs = stage1_model.predict(stage1_input, verbose=0)[0]
+    stage1_idx = int(np.argmax(stage1_probs))
+    stage1_conf = float(stage1_probs[stage1_idx])
+
+    logging.info(f"Stage1 probs: {stage1_probs}")
+
+    if STAGE1_CLASSES[stage1_idx] == "NonCrop" or stage1_conf < STAGE1_THRESHOLD:
+        return jsonify({
+            "stage": "stage1",
+            "crop": "NonCrop",
+            "confidence": round(stage1_conf * 100, 2),
+            "message": "Uploaded image is not a crop",
+            "top3": [],
+            "treatment": None
+        })
+
+    # ---------- STAGE 2: Crop Type ----------
+    stage2_input = preprocess_effnet(img_array)
+    stage2_probs = stage2_model.predict(stage2_input, verbose=0)[0]
+    stage2_idx = int(np.argmax(stage2_probs))
+    stage2_conf = float(stage2_probs[stage2_idx])
+    crop = STAGE2_CLASSES[stage2_idx]
+
+    logging.info(f"Stage2 probs: {stage2_probs}")
+
+    if stage2_conf < STAGE2_THRESHOLD:
+        return jsonify({
+            "stage": "stage2",
+            "crop": "Unknown Crop",
+            "confidence": round(stage2_conf * 100, 2),
+            "message": "Crop type confidence too low",
+            "top3": [],
+            "treatment": None
+        })
+
+    # ---------- STAGE 3: Disease ----------
+    disease_input = preprocess_mobilenet(img_array)
+
+    if crop == "Wheat":
+        model = wheat_model
+        classes = WHEAT_CLASSES
+    elif crop == "Rice":
+        model = rice_model
+        classes = RICE_CLASSES
+    else:
+        model = corn_model
+        classes = CORN_CLASSES
+
+    disease_probs = model.predict(disease_input, verbose=0)[0]
+    top_indices = np.argsort(disease_probs)[-3:][::-1]
 
     top3 = [{
         "disease": classes[i],
-        "confidence": round(float(probs[i]) * 100, 2)
-    } for i in top_idx]
+        "confidence": round(float(disease_probs[i]) * 100, 2)
+    } for i in top_indices]
 
     best = top3[0]
-    disease = best["disease"] if best["confidence"] >= 60 else "Healthy"
+
+    disease = (
+        best["disease"]
+        if best["confidence"] >= DISEASE_THRESHOLD * 100
+        else "Healthy"
+    )
 
     return jsonify({
+        "stage": "done",
         "crop": crop,
+        "crop_confidence": round(stage2_conf * 100, 2),
         "disease": disease,
         "top3": top3,
         "treatment": TREATMENT_DB.get(disease)
     })
 
+# ================= RUN =================
 if __name__ == "__main__":
     app.run(debug=True)

@@ -1,8 +1,15 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { NavbarProps } from "../types";
 
 const Navbar: React.FC<NavbarProps> = ({ search, setSearch }) => {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/login");
+  };
+
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow-sm">
       <div className="container">
@@ -18,80 +25,46 @@ const Navbar: React.FC<NavbarProps> = ({ search, setSearch }) => {
         <div className="collapse navbar-collapse" id="mainNav">
           <ul className="navbar-nav mx-auto mb-2 mb-lg-0">
             <li className="nav-item">
-              <Link className="nav-link" to="/">
-                Home
-              </Link>
+              <Link className="nav-link" to="/">Home</Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/about">
-                About
-              </Link>
+              <Link className="nav-link" to="/about">About</Link>
             </li>
 
-            {/* Services Dropdown */}
             <li className="nav-item dropdown">
               <Link
                 className="nav-link dropdown-toggle"
                 to="#"
                 role="button"
                 data-bs-toggle="dropdown"
-                aria-expanded="false"
               >
                 Services
               </Link>
               <ul className="dropdown-menu shadow-sm border-0 rounded-3">
-                <li>
-                  <Link className="dropdown-item" to="/services">
-                    Our Services 
-                  </Link>
-                </li>
-                <li>
-                  <Link className="dropdown-item" to="/marketplace">
-                    MarketPlace
-                  </Link>
-                </li>
-                <li>
-                  <Link className="dropdown-item" to="/detect">
-                    Disease Detection
-                  </Link>
-                </li>
-                <li>
-                  <Link className="dropdown-item" to="/chatbot">
-                    ChatBot
-                  </Link>
-                </li>
-                <li>
-                  <Link className="dropdown-item" to="/weather">
-                    Weather
-                  </Link>
-                </li>
+                <li><Link className="dropdown-item" to="/services">Our Services</Link></li>
+                <li><Link className="dropdown-item" to="/marketplace">MarketPlace</Link></li>
+                <li><Link className="dropdown-item" to="/detect">Disease Detection</Link></li>
+                <li><Link className="dropdown-item" to="/chatbot">ChatBot</Link></li>
+                <li><Link className="dropdown-item" to="/weather">Weather</Link></li>
               </ul>
             </li>
 
             <li className="nav-item">
-              <Link className="nav-link" to="/blog">
-                Blog
-              </Link>
+              <Link className="nav-link" to="/blog">Blog</Link>
             </li>
-
             <li className="nav-item">
-              <Link className="nav-link" to="/contact">
-                Contact
-              </Link>
+              <Link className="nav-link" to="/contact">Contact</Link>
             </li>
           </ul>
 
-          {/* Login/Register */}
+          {/* Logout Button */}
           <div className="d-flex me-3">
-            <Link className="btn btn-link btn-sm text-success" to="/login">
-              Login
-            </Link>
-            <Link
-              className="btn btn-success btn-sm ms-2 px-3 rounded-pill"
-              to="/register"
+            <button
+              className="btn btn-success btn-sm px-3 rounded-pill"
+              onClick={handleLogout}
             >
-              Register
-            </Link>
+              Logout
+            </button>
           </div>
 
           {/* Search */}
